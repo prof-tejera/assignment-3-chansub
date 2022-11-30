@@ -87,6 +87,8 @@ const Inner = (props) => {
   const [secondsXY, setSecondsXY] = useState(initialSeconds);
   const [roundsTabata, setRoundsTabata] = useState(1);
   const [secondsTabata, setSecondsTabata] = useState(initialSeconds);
+
+  const [localStorage, setLocalStorage] = useStickyState([],"CURRENT-WORKOUT");
   
   function ShowSelections(){
     if(isHome === 'yes'){
@@ -188,9 +190,24 @@ const Inner = (props) => {
 
   function ShowSaveButton(){
     if((isHome === 'no')&&(queue.length > 0)){
-      return <Button onClick={()=> {alert('save me')}} text="Save Workout"/>
+      return (
+        <Button onClick={()=> {setLocalStorage(queue)}} text='Save Workout'/>
+      )
     }
+  }
 
+  //Took inspiration from here: https://www.joshwcomeau.com/react/persisting-react-state-in-localstorage/
+  function useStickyState(defaultValue, key) {
+    const [value, setValue] = React.useState(() => {
+      const stickyValue = window.localStorage.getItem(key);
+      return stickyValue !== null
+        ? JSON.parse(stickyValue)
+        : defaultValue;
+    });
+    React.useEffect(() => {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    }, [key, value]);
+    return [value, setValue];
   }
 
   return (
@@ -199,8 +216,6 @@ const Inner = (props) => {
         <ShowSelections/>
 
         <ShowTotalDuration/>
-
-        <ShowSaveButton/>
 
         {/* Show Queue*/}
         <Button onClick={() => {
@@ -215,13 +230,13 @@ const Inner = (props) => {
 
         <Button onClick={clear} type="reset" text="Reset" disabled={(queue.length < 1)}/>
 
+        <ShowSaveButton/>
+
         <div className="queue" style={QueueStyle}>
           {queue.map((t, i) => (
             <Timer key={i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} isHome={isHome}/>
           ))}
         </div>  
-
-
 
     </div>
   );
