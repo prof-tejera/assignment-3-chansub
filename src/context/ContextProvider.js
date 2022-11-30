@@ -5,7 +5,7 @@ export const AppContext = React.createContext({});
 const AppProvider = ({ children }) => {
   const [queue, setQueue] = useState([]);
   const [paused, setPaused] = useState(true);
-  const [message, setMessage] = useState('hello');
+  const [progressTime, setProgressTime] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
@@ -23,14 +23,15 @@ const AppProvider = ({ children }) => {
           setQueue([]);
           setActiveIndex(0);
           setPaused(true);
+          setProgressTime(0);
           console.log("Clear hit");
         },
         addItem: (item) => setQueue((q) => [...q, item]),
         removeItem: (index) => setQueue(queue.filter((q, i) => i !== index)),
         queue,
         setQueue,
-        message,
-        setMessage
+        progressTime,
+        setProgressTime
       }}
     >
       {children}

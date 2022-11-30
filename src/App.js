@@ -80,15 +80,14 @@ const Inner = (props) => {
   let initialSeconds = 5;
   const isHome = props.isHome;
 
-  const { queue, addItem, paused, setPaused, reset, clear } = useContext(AppContext);
+  const {queue, addItem, paused, setPaused, reset, clear, progressTime} = useContext(AppContext);
   const [secondsStopwatch, setSecondsStopwatch] = useState(initialSeconds);
   const [secondsCountdown, setSecondsCountdown] = useState(initialSeconds);
-  
   const [roundsXY, setRoundsXY] = useState(1);
   const [secondsXY, setSecondsXY] = useState(initialSeconds);
   const [roundsTabata, setRoundsTabata] = useState(1);
   const [secondsTabata, setSecondsTabata] = useState(initialSeconds);
-
+  
   function ShowSelections(){
     if(isHome === 'yes'){
       return <Link to="/add">Add</Link>
@@ -174,6 +173,7 @@ const Inner = (props) => {
   }
 
   function ShowTotalDuration(){
+    //add all the duration from queue array
     const totalDuration = queue.reduce((accumulator, object) => {
       return parseInt(accumulator) + parseInt(object.duration);
     },0);
@@ -181,8 +181,16 @@ const Inner = (props) => {
     return(
       <Panel className="output">
             <DisplayTime label="Total Time:" time={convertToMinSec(totalDuration)}/>
+            <DisplayTime label="Seconds Lapsed:" time={convertToMinSec(progressTime)}/>
       </Panel>
     )
+  }
+
+  function ShowSaveButton(){
+    if((isHome === 'no')&&(queue.length > 0)){
+      return <Button onClick={()=> {alert('save me')}} text="Save Workout"/>
+    }
+
   }
 
   return (
@@ -191,6 +199,8 @@ const Inner = (props) => {
         <ShowSelections/>
 
         <ShowTotalDuration/>
+
+        <ShowSaveButton/>
 
         {/* Show Queue*/}
         <Button onClick={() => {
@@ -210,6 +220,8 @@ const Inner = (props) => {
             <Timer key={i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} isHome={isHome}/>
           ))}
         </div>  
+
+
 
     </div>
   );

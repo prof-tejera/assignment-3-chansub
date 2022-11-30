@@ -9,7 +9,7 @@ import Panel from "../components/generic/Panel";
 import DisplayRounds from "../components/generic/DisplayRounds";
 
 const Timer = ({ duration, rounds, index, type, isHome }) => {
-  const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue} = useContext(AppContext);
+  const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime} = useContext(AppContext);
   const [time, setTime] = useState(0);
   const active = activeIndex === index; 
 
@@ -31,6 +31,7 @@ const Timer = ({ duration, rounds, index, type, isHome }) => {
     } 
     else {
       setTime((c) => c + 1);
+      setProgressTime((j) => j + 1);
     }
   }, 1000);
 
