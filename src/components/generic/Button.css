@@ -1,0 +1,16 @@
+button{
+    cursor: pointer;
+    margin: 10px;
+    min-width: 50px;
+    background-color:rgba(249, 248, 241, 0.926);
+    border-radius: 5px;
+    border-color: #e7e7e7;
+}
+
+button:disabled{
+    background-color: rgb(202, 200, 200);
+    cursor: not-allowed;
+}
+button:disabled img{
+    opacity: .25;
+}

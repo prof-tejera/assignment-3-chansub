@@ -1,0 +1,21 @@
+.output{
+    font-size: 16px;
+    line-height: 2em;
+}
+  
+  
+.output .numbers{
+    font-family: 'digital-7regular', Arial, sans-serif;
+    font-weight:bolder;
+    font-style:normal;
+    /* color: #d9760b; */
+    color: #4E0707;
+    font-size: 40px;
+}
+
+.timeLabel{
+    padding-left: 10px;
+}
+.queue .timeLabel{
+    padding: 0px;
+}
