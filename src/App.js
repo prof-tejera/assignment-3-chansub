@@ -1,5 +1,8 @@
 import React, {useContext, useState} from "react";
-import { useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useLocalStorage} from "./hooks";
+import { useNavigate, useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+
 import styled from "styled-components";
 
 import DocumentationView from "./views/DocumentationView";
@@ -77,7 +80,7 @@ const Timer = LocalTime;
 
 const Inner = (props) => {
   
-  let initialSeconds = 5;
+  const initialSeconds = 5;
   const isHome = props.isHome;
 
   const {queue, addItem, paused, setPaused, reset, clear, progressTime} = useContext(AppContext);
@@ -87,9 +90,9 @@ const Inner = (props) => {
   const [secondsXY, setSecondsXY] = useState(initialSeconds);
   const [roundsTabata, setRoundsTabata] = useState(1);
   const [secondsTabata, setSecondsTabata] = useState(initialSeconds);
-
-  const [localStorage, setLocalStorage] = useStickyState([],"CURRENT-WORKOUT");
-  
+  const [localStorage, setLocalStorage] = useLocalStorage([],"CURRENT-WORKOUT");
+  const navigate = useNavigate();
+     
   function ShowSelections(){
     if(isHome === 'yes'){
       return <Link to="/add">Add</Link>
@@ -190,25 +193,44 @@ const Inner = (props) => {
 
   function ShowSaveButton(){
     if((isHome === 'no')&&(queue.length > 0)){
+
+      console.log(localStorage);
+
       return (
-        <Button onClick={()=> {setLocalStorage(queue)}} text='Save Workout'/>
+        <Button onClick={()=> {setLocalStorage(queue); SetQueryString();}} text='Save'/>
       )
     }
   }
 
-  //Took inspiration from here: https://www.joshwcomeau.com/react/persisting-react-state-in-localstorage/
-  function useStickyState(defaultValue, key) {
-    const [value, setValue] = React.useState(() => {
-      const stickyValue = window.localStorage.getItem(key);
-      return stickyValue !== null
-        ? JSON.parse(stickyValue)
-        : defaultValue;
-    });
-    React.useEffect(() => {
-      window.localStorage.setItem(key, JSON.stringify(value));
-    }, [key, value]);
-    return [value, setValue];
+  function SetQueryString(){
+    //grab queue and turn into querystring
+    
+    const currObj = JSON.stringify(queue);
+    const currObjParsed = JSON.parse(currObj);
+    console.log("currObjParsed is", currObjParsed);
+
+    let qs = '?q=current';
+    for(let i in currObjParsed){
+      if(i < 3){
+        qs += '&t=' + currObjParsed[i].type;
+        qs += '&s=' + currObjParsed[i].duration;
+        if(currObjParsed[i].rounds) qs += '&r=' + currObjParsed[i].rounds;
+      }
+    }
+    console.log("QS is", qs);
+    navigate(qs);
+
+    // let history = useHistory();
+
+    // history.push({
+    //   pathname: "/add",
+    //   search: qs
+    // })
+
+    
   }
+
+  
 
   return (
     <div>

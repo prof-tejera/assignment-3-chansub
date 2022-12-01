@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import {useState, useEffect, useRef } from "react";
 
 export const useInterval = (callback, delay) => {
   const savedCallback = useRef(callback);
@@ -20,4 +20,23 @@ export const useInterval = (callback, delay) => {
 
     return () => clearInterval(id);
   }, [delay]);
+};
+
+
+//Took inspiration from here: https://www.joshwcomeau.com/react/persisting-react-state-in-localstorage/
+export const useLocalStorage = (defaultValue, key) => {
+  const [value, setValue] = useState(() => {
+
+    const stickyValue = window.localStorage.getItem(key);
+    
+    return stickyValue !== null
+      ? JSON.parse(stickyValue)
+      : defaultValue;
+  });
+  
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+  return [value, setValue];
+
 };
