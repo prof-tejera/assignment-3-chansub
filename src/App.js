@@ -1,13 +1,9 @@
 import React, {useContext, useState} from "react";
 import { useLocalStorage} from "./hooks";
-import { useNavigate, useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-
-
+import { useSearchParams, useNavigate, useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import styled from "styled-components";
-
 import DocumentationView from "./views/DocumentationView";
 import TimersView from "./views/TimersView";
-
 import LocalTime from "./context/LocalTime";
 import AppProvider, { AppContext } from "./context/ContextProvider";
 import {DropdownTime, DropdownRounds} from "./components/generic/Dropdown";
@@ -15,6 +11,7 @@ import Button from "./components/generic/Button";
 import Panel from "./components/generic/Panel";
 import DisplayTime  from "./components/generic/DisplayTime.js";
 import { convertToMinSec } from "./utils/helpers";
+
 
 const Container = styled.div`
   background: #f0f6fb;
@@ -92,6 +89,27 @@ const Inner = (props) => {
   const [secondsTabata, setSecondsTabata] = useState(initialSeconds);
   const [localStorage, setLocalStorage] = useLocalStorage([],"CURRENT-WORKOUT");
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  
+  //  for (const entry of searchParams.entries()) {
+  //    const [param, value] = entry;
+  //    console.log(param, value);
+  //  }
+
+ 
+  // const test = [...searchParams];
+  // console.log("test",test);
+const myQS = searchParams.toString().split('&pos=');
+console.log("myQS",myQS);
+for(let q in myQS){
+  const sp = new URLSearchParams(myQS[q]);
+  for(const p of sp){
+    console.log('heyyyy',p);
+  }
+}
+
+
      
   function ShowSelections(){
     if(isHome === 'yes'){
@@ -193,9 +211,7 @@ const Inner = (props) => {
 
   function ShowSaveButton(){
     if((isHome === 'no')&&(queue.length > 0)){
-
       console.log(localStorage);
-
       return (
         <Button onClick={()=> {setLocalStorage(queue); SetQueryString();}} text='Save'/>
       )
@@ -204,33 +220,27 @@ const Inner = (props) => {
 
   function SetQueryString(){
     //grab queue and turn into querystring
-    
     const currObj = JSON.stringify(queue);
     const currObjParsed = JSON.parse(currObj);
-    console.log("currObjParsed is", currObjParsed);
 
-    let qs = '?q=current';
+    let qs = '?';
     for(let i in currObjParsed){
       if(i < 3){
-        qs += '&t=' + currObjParsed[i].type;
-        qs += '&s=' + currObjParsed[i].duration;
-        if(currObjParsed[i].rounds) qs += '&r=' + currObjParsed[i].rounds;
+        let qsItem = new URLSearchParams(currObjParsed[i]);
+        qs += qsItem + "&pos=&";
       }
+      
+
+      // if(i < 3){ 
+      //   qs += '&t' + i +'=' + currObjParsed[i].type;
+      //   qs += '&s' + i + '=' + currObjParsed[i].duration;
+      //   if(currObjParsed[i].rounds) qs += '&r' + i + '=' + currObjParsed[i].rounds;
+      // }
     }
     console.log("QS is", qs);
     navigate(qs);
-
-    // let history = useHistory();
-
-    // history.push({
-    //   pathname: "/add",
-    //   search: qs
-    // })
-
-    
   }
-
-  
+ 
 
   return (
     <div>
