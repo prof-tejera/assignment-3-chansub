@@ -97,7 +97,6 @@ const Inner = (props) => {
   //    console.log(param, value);
   //  }
 
- 
   // const test = [...searchParams];
   // console.log("test",test);
 const myQS = searchParams.toString().split('&pos=');
