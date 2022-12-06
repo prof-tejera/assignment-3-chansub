@@ -99,14 +99,14 @@ const Inner = (props) => {
 
   // const test = [...searchParams];
   // console.log("test",test);
-const myQS = searchParams.toString().split('&pos=');
-console.log("myQS",myQS);
-for(let q in myQS){
-  const sp = new URLSearchParams(myQS[q]);
-  for(const p of sp){
-    console.log('heyyyy',p);
+  const myQS = searchParams.toString().split('&pos=');
+  console.log("myQS",myQS);
+  for(let q in myQS){
+    const sp = new URLSearchParams(myQS[q]);
+    for(const p of sp){
+      console.log('heyyyy',p);
+    }
   }
-}
     
   function ShowSelections(){
     if(isHome === 'yes'){
