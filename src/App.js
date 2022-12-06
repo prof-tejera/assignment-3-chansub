@@ -107,9 +107,7 @@ for(let q in myQS){
     console.log('heyyyy',p);
   }
 }
-
-
-     
+    
   function ShowSelections(){
     if(isHome === 'yes'){
       return <Link to="/add">Add</Link>
