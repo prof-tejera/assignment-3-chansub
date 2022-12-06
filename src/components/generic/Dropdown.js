@@ -1,26 +1,5 @@
 import React from "react";
 
-const Dropdown = ({ddID, ...props}) => {
-
-  //inspiration from: https://www.techiedelight.com/create-array-from-1-n-javascript/  
-  const N = 30;
-  const numbers60 = [...Array(N).keys()].map(x => ++x);
-  
-  return (
-    <select id={props.id} key={ddID} {...props}>
-        <option>0</option>
-        {
-            numbers60.map((n,index) => {
-              return (<option key={index}>{n}</option>);
-            })
-        }
-    </select>
-  )
-};
-export default Dropdown;
-
-
-
 export const DropdownRounds = ({ddID, ...props}) => {
   return (
     <select id={props.id} {...props}>
@@ -32,7 +11,6 @@ export const DropdownRounds = ({ddID, ...props}) => {
     </select>
   )
 };
-
 
 export const DropdownTime = ({ddID, ...props}) => {
   return (
@@ -47,6 +25,18 @@ export const DropdownTime = ({ddID, ...props}) => {
         <option value="90">01:30</option>
         <option value="105">01:45</option>
         <option value="120">02:00</option>
+        <option value="135">02:15</option>
+        <option value="150">02:30</option>
+        <option value="165">02:45</option>
+        <option value="180">03:00</option>
+        <option value="195">03:15</option>
+        <option value="210">03:30</option>
+        <option value="225">03:45</option>
+        <option value="240">04:00</option>
+        <option value="255">04:15</option>
+        <option value="270">04:30</option>
+        <option value="285">04:45</option>
+        <option value="300">05:00</option>
     </select>
   )
 };

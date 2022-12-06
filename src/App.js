@@ -73,6 +73,8 @@ const Nav = () => {
   );
 };
 
+
+
 const Timer = LocalTime;
 
 const Inner = (props) => {
@@ -80,7 +82,7 @@ const Inner = (props) => {
   const initialSeconds = 5;
   const isHome = props.isHome;
 
-  const {queue, addItem, paused, setPaused, reset, clear, progressTime} = useContext(AppContext);
+  const {queue, setQueue, addItem, paused, setPaused, reset, clear, progressTime} = useContext(AppContext);
   const [secondsStopwatch, setSecondsStopwatch] = useState(initialSeconds);
   const [secondsCountdown, setSecondsCountdown] = useState(initialSeconds);
   const [roundsXY, setRoundsXY] = useState(1);
@@ -92,21 +94,20 @@ const Inner = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   
-  //  for (const entry of searchParams.entries()) {
-  //    const [param, value] = entry;
-  //    console.log(param, value);
-  //  }
-
-  // const test = [...searchParams];
-  // console.log("test",test);
-  const myQS = searchParams.toString().split('&pos=');
-  console.log("myQS",myQS);
-  for(let q in myQS){
-    const sp = new URLSearchParams(myQS[q]);
-    for(const p of sp){
-      console.log('heyyyy',p);
-    }
-  }
+  //On Page load, create queue
+  //  const myQS = searchParams.toString().split('&pos=');
+  //  console.log("myQS",myQS);
+  //  for(let q in myQS){
+  //   let item = myQS[q];
+  //   var params = new URLSearchParams(item);
+  //   let d = params.get('duration');
+  //   let t = params.get('type');
+  //   let r = params.get('rounds');
+  //   console.log(d, t, r);
+  //   if(d !== null){
+  //     //addItem here would cause an infinite loop
+  //   }
+  // }
     
   function ShowSelections(){
     if(isHome === 'yes'){
@@ -208,7 +209,6 @@ const Inner = (props) => {
 
   function ShowSaveButton(){
     if((isHome === 'no')&&(queue.length > 0)){
-      console.log(localStorage);
       return (
         <Button onClick={()=> {setLocalStorage(queue); SetQueryString();}} text='Save'/>
       )
@@ -226,16 +226,9 @@ const Inner = (props) => {
         let qsItem = new URLSearchParams(currObjParsed[i]);
         qs += qsItem + "&pos=&";
       }
-      
-
-      // if(i < 3){ 
-      //   qs += '&t' + i +'=' + currObjParsed[i].type;
-      //   qs += '&s' + i + '=' + currObjParsed[i].duration;
-      //   if(currObjParsed[i].rounds) qs += '&r' + i + '=' + currObjParsed[i].rounds;
-      // }
     }
     console.log("QS is", qs);
-    navigate(qs);
+    //navigate(qs);  //set the URL
   }
  
 
