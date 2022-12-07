@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { usePersistedState } from "../hooks";
 
 export const AppContext = React.createContext({});
 
 const AppProvider = ({ children }) => {
+  //const [queue, setQueue] = usePersistedState('CURRENT-WORKOUT',[]); //this way saves to local storage at every edit 
   const [queue, setQueue] = useState([]);
   const [paused, setPaused] = useState(true);
   const [progressTime, setProgressTime] = useState(0);

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import { useLocalStorage} from "./hooks";
 import { useSearchParams, useNavigate, useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import styled from "styled-components";
@@ -89,12 +89,22 @@ const Inner = (props) => {
   const [secondsXY, setSecondsXY] = useState(initialSeconds);
   const [roundsTabata, setRoundsTabata] = useState(1);
   const [secondsTabata, setSecondsTabata] = useState(initialSeconds);
-  const [localStorage, setLocalStorage] = useLocalStorage([],"CURRENT-WORKOUT");
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [localStorage, setLocalStorage] = useLocalStorage([],'CURRENT-WORKOUT');
 
+
+  function LoadOnce() {
+    
   
-  //On Page load, create queue
+    useEffect(() => {
+      console.log("Run once only localStorage", localStorage);
+      setQueue(localStorage);
+    }, [queue]); 
+  
+    return <h1>I've rendered once only</h1>;
+  }
+  //On Page load, create queue from querystring
   //  const myQS = searchParams.toString().split('&pos=');
   //  console.log("myQS",myQS);
   //  for(let q in myQS){
@@ -108,6 +118,8 @@ const Inner = (props) => {
   //     //addItem here would cause an infinite loop
   //   }
   // }
+
+
     
   function ShowSelections(){
     if(isHome === 'yes'){
@@ -210,7 +222,7 @@ const Inner = (props) => {
   function ShowSaveButton(){
     if((isHome === 'no')&&(queue.length > 0)){
       return (
-        <Button onClick={()=> {setLocalStorage(queue); SetQueryString();}} text='Save'/>
+        <Button onClick={()=> {setLocalStorage(queue);SetQueryString();}} text='Save'/>
       )
     }
   }
@@ -228,13 +240,14 @@ const Inner = (props) => {
       }
     }
     console.log("QS is", qs);
-    //navigate(qs);  //set the URL
+    navigate(qs);  //set the URL
   }
  
 
   return (
     <div>
-        
+        <LoadOnce/>
+
         <ShowSelections/>
 
         <ShowTotalDuration/>
