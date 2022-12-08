@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from "react";
-import { useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useSearchParams, useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import DocumentationView from "./views/DocumentationView";
 import TimersView from "./views/TimersView";
@@ -10,7 +10,9 @@ import Button from "./components/generic/Button";
 import Panel from "./components/generic/Panel";
 import DisplayTime  from "./components/generic/DisplayTime.js";
 import { convertToMinSec } from "./utils/helpers";
-import { useNavigate} from "react-router-dom";
+
+
+//NOTE: This example uses setSearchParams, but probablem is it can only set one key value pair max! Uselessss.
 
 const Container = styled.div`
   background: #f0f6fb;
@@ -93,15 +95,15 @@ const Inner = (props) => {
   const initialSeconds = 5;
   const isHome = props.isHome;
 
-  const {queue, setQueue, addItem, paused, setPaused, reset, clear, progressTime} = useContext(AppContext);
+  const {queue, setQueue, addItem, paused, setPaused, reset, clear, progressTime, urlPath} = useContext(AppContext);
   const [secondsStopwatch, setSecondsStopwatch] = useState(initialSeconds);
   const [secondsCountdown, setSecondsCountdown] = useState(initialSeconds);
   const [roundsXY, setRoundsXY] = useState(1);
   const [secondsXY, setSecondsXY] = useState(initialSeconds);
   const [roundsTabata, setRoundsTabata] = useState(1);
   const [secondsTabata, setSecondsTabata] = useState(initialSeconds);
-  const navigate = useNavigate();
-  
+  //const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   
 
   //On Page load, create queue from querystring
@@ -142,7 +144,11 @@ const Inner = (props) => {
                 duration: secondsStopwatch,
                 type: 'Stopwatch'
               });
-              SetQueryString();
+              setSearchParams({
+                duration: secondsStopwatch,
+                type: 'Stopwatch'
+              });
+
             } }
           >
           </Button>
@@ -158,7 +164,14 @@ const Inner = (props) => {
                 duration: secondsCountdown,
                 type: 'Countdown'
               });
-              SetQueryString();
+              
+              searchParams.set("test","susana");
+
+              setSearchParams({
+                duration2: secondsCountdown,
+                type2: 'Countdown'
+              });
+
             } }
           >
           </Button>
@@ -179,7 +192,6 @@ const Inner = (props) => {
                 type: 'XY',
                 rounds: roundsXY
               });
-              SetQueryString();
             } }
           >
           </Button>
@@ -200,7 +212,6 @@ const Inner = (props) => {
                 type: 'Tabata',
                 rounds: roundsTabata
               });
-              SetQueryString();
             } }
           >
           </Button>
@@ -224,23 +235,29 @@ const Inner = (props) => {
     )
   }
 
- 
-  function SetQueryString(){
-    //grab queue and turn into querystring
-    let qs = '?';
-    for(let i in queue){
-      if(i < 3){
-        let qsItem = new URLSearchParams(queue[i]);
-        qs += qsItem + "&pos=&";
-      }
-    }
-    console.log("QS is", qs);
-    navigate(qs);  //set the URL
-  }
+  
+
+  // function SetQueryString(){
+  //   //grab queue and turn into querystring
+  //   const currObj = JSON.stringify(queue);
+  //   const currObjParsed = JSON.parse(currObj);
+
+  //   let qs = '?';
+  //   for(let i in currObjParsed){
+  //     if(i < 3){
+  //       let qsItem = new URLSearchParams(currObjParsed[i]);
+  //       qs += qsItem + "&pos=&";
+  //     }
+  //   }
+  //   console.log("QS is", qs);
+  //   navigate(qs);  //set the URL
+  // }
  
 
   return (
     <div>
+
+        <p>{urlPath}</p>
 
         <ShowSelections/>
 
