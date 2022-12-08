@@ -63,6 +63,7 @@ export const usePersistedState = (storageKey, fallbackValue) => {
 
 
 //Took inspiration from here: https://www.joshwcomeau.com/react/persisting-react-state-in-localstorage/
+/*
 export const useLocalStorage = (defaultValue, key) => {
   const [value, setValue] = useState(() => {
 
@@ -86,5 +87,5 @@ export const useLocalStorage = (defaultValue, key) => {
 ];
 
 };
-
+*/
 

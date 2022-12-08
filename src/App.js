@@ -1,6 +1,5 @@
 import React, {useContext, useState, useEffect} from "react";
-import { useLocalStorage} from "./hooks";
-import { useSearchParams, useNavigate, useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useSearchParams, useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import DocumentationView from "./views/DocumentationView";
 import TimersView from "./views/TimersView";
@@ -73,6 +72,18 @@ const Nav = () => {
   );
 };
 
+// const LoadOnceComponent = () => {
+//   const {setQueue} = useContext(AppContext);
+//   const [myLS,setMyLS] = useLocalStorage([],'CURRENT-WORKOUT');
+
+//   useEffect(() => {
+//     console.log("Load once only myLS", myLS);
+//     if(myLS.length > 0)setQueue(myLS);
+//   }, []); 
+  
+//   return null
+// }
+
 
 
 const Timer = LocalTime;
@@ -82,28 +93,16 @@ const Inner = (props) => {
   const initialSeconds = 5;
   const isHome = props.isHome;
 
-  const {queue, setQueue, addItem, paused, setPaused, reset, clear, progressTime} = useContext(AppContext);
+  const {queue, setQueue, addItem, paused, setPaused, reset, clear, progressTime, urlPath} = useContext(AppContext);
   const [secondsStopwatch, setSecondsStopwatch] = useState(initialSeconds);
   const [secondsCountdown, setSecondsCountdown] = useState(initialSeconds);
   const [roundsXY, setRoundsXY] = useState(1);
   const [secondsXY, setSecondsXY] = useState(initialSeconds);
   const [roundsTabata, setRoundsTabata] = useState(1);
   const [secondsTabata, setSecondsTabata] = useState(initialSeconds);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [localStorage, setLocalStorage] = useLocalStorage([],'CURRENT-WORKOUT');
 
-
-  function LoadOnce() {
-    
-  
-    useEffect(() => {
-      console.log("Run once only localStorage", localStorage);
-      setQueue(localStorage);
-    }, [queue]); 
-  
-    return <h1>I've rendered once only</h1>;
-  }
   //On Page load, create queue from querystring
   //  const myQS = searchParams.toString().split('&pos=');
   //  console.log("myQS",myQS);
@@ -219,34 +218,29 @@ const Inner = (props) => {
     )
   }
 
-  function ShowSaveButton(){
-    if((isHome === 'no')&&(queue.length > 0)){
-      return (
-        <Button onClick={()=> {setLocalStorage(queue);SetQueryString();}} text='Save'/>
-      )
-    }
-  }
+  
 
-  function SetQueryString(){
-    //grab queue and turn into querystring
-    const currObj = JSON.stringify(queue);
-    const currObjParsed = JSON.parse(currObj);
+  // function SetQueryString(){
+  //   //grab queue and turn into querystring
+  //   const currObj = JSON.stringify(queue);
+  //   const currObjParsed = JSON.parse(currObj);
 
-    let qs = '?';
-    for(let i in currObjParsed){
-      if(i < 3){
-        let qsItem = new URLSearchParams(currObjParsed[i]);
-        qs += qsItem + "&pos=&";
-      }
-    }
-    console.log("QS is", qs);
-    navigate(qs);  //set the URL
-  }
+  //   let qs = '?';
+  //   for(let i in currObjParsed){
+  //     if(i < 3){
+  //       let qsItem = new URLSearchParams(currObjParsed[i]);
+  //       qs += qsItem + "&pos=&";
+  //     }
+  //   }
+  //   console.log("QS is", qs);
+  //   navigate(qs);  //set the URL
+  // }
  
 
   return (
     <div>
-        <LoadOnce/>
+
+        <p>{urlPath}</p>
 
         <ShowSelections/>
 
@@ -265,8 +259,6 @@ const Inner = (props) => {
 
         <Button onClick={clear} type="reset" text="Reset" disabled={(queue.length < 1)}/>
 
-        <ShowSaveButton/>
-
         <div className="queue" style={QueueStyle}>
           {queue.map((t, i) => (
             <Timer key={i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} isHome={isHome}/>
@@ -280,9 +272,13 @@ const Inner = (props) => {
 const App = () => {
   return (
     <AppProvider>
+
+    {/* <LoadOnceComponent/> */}
+
     <Container>
       <Router>
         <Nav />
+
         <Routes>
           <Route path="/" element={<BodyContainer><Body><Inner isHome='yes'/></Body></BodyContainer>} />
           <Route path="/docs" element={<DocumentationView />} />
