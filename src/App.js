@@ -79,25 +79,28 @@ const LoadOnceFromQueryString = () => {
     let newQueue = [];
     if(queryParams.has('t0')){
 
-      let d0 = parseInt(queryParams.get("d0"), 0);;
+      let d0 = queryParams.has("d0") ? parseInt(queryParams.get("d0"), 0) : 0;
       let t0 = queryParams.get("t0");
-      let r0 = parseInt(queryParams.get("r0"), 0);;
-      let d1 = parseInt(queryParams.get("d1"), 0);;
+      let r0 = queryParams.has("r0") ? parseInt(queryParams.get("r0"), 0) : 0;
+
+      let d1 = queryParams.has("d1") ? parseInt(queryParams.get("d1"), 0) : 0;
       let t1 = queryParams.get("t1");
-      let r1 = parseInt(queryParams.get("r1"), 0);;
-      let d2 = parseInt(queryParams.get("d2"), 0);;
+      let r1 = queryParams.has("r1") ? parseInt(queryParams.get("r1"), 0) : 0;
+
+      let d2 = queryParams.has("d2") ? parseInt(queryParams.get("d2"), 0) : 0;
       let t2 = queryParams.get("t2");
-      let r2 = parseInt(queryParams.get("r2"), 0);;
+      let r2 = queryParams.has("r2") ? parseInt(queryParams.get("r2"), 0) : 0;
 
       newQueue = [
-        {duration: d0, type: t0, round: r0},
-        {duration: d1, type: t1, round: r1},
-        {duration: d2, type: t2, round: r2}]
+        {duration: d0, type: t0, rounds: r0},
+        {duration: d1, type: t1, rounds: r1},
+        {duration: d2, type: t2, rounds: r2}]
     }
 
     useEffect(() => {
       console.log("Load once only", newQueue);
       if(newQueue.length > 0) setQueue(newQueue);
+       // eslint-disable-next-line 
     }, []); 
   
   return null
@@ -111,7 +114,7 @@ const Inner = (props) => {
   const initialSeconds = 5;
   const isHome = props.isHome;
 
-  const {queue, setQueue, addItem, paused, setPaused, reset, clear, progressTime} = useContext(AppContext);
+  const {queue, addItem, paused, setPaused, reset, clear, progressTime} = useContext(AppContext);
   const [secondsStopwatch, setSecondsStopwatch] = useState(initialSeconds);
   const [secondsCountdown, setSecondsCountdown] = useState(initialSeconds);
   const [roundsXY, setRoundsXY] = useState(1);
