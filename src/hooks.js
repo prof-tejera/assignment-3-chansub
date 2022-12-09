@@ -23,8 +23,6 @@ export const useInterval = (callback, delay) => {
 };
 
 
-
-//copied over from one of the lectures
 export const usePersistedState = (storageKey, fallbackValue) => {
   const [value, setValue] = useState(() => {
     const storedValue = window.localStorage.getItem(storageKey);

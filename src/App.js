@@ -2,6 +2,7 @@ import React, {useContext, useState, useEffect} from "react";
 import { useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 import DocumentationView from "./views/DocumentationView";
+import HistoryView from "./views/HistoryView";
 import TimersView from "./views/TimersView";
 import LocalTime from "./context/LocalTime";
 import AppProvider, { AppContext } from "./context/ContextProvider";
@@ -65,6 +66,9 @@ const Nav = () => {
         </li>
         <li className={(splitLocation[1] === 'docs' ? 'active':'')}>
           <Link to="/docs">Documentation</Link>
+        </li>
+        <li className={(splitLocation[1] === 'history' ? 'active':'')}>
+          <Link to="/history">History</Link>
         </li>
 
       </ul>
@@ -285,6 +289,7 @@ const App = () => {
           <Route path="/docs" element={<DocumentationView />} />
           <Route path="/timers" element={<TimersView />} />
           <Route path="/add" element={<BodyContainer><Body><Inner isHome='no'/></Body></BodyContainer>} />
+          <Route path="/history" element={<BodyContainer><Body><HistoryView/></Body></BodyContainer>} />
         </Routes>
       </Router>
     </Container>

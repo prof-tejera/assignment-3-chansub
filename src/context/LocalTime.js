@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useInterval } from "../hooks";
+import { useInterval, usePersistedState } from "../hooks";
 import { AppContext } from "./ContextProvider";
 
 import DisplayTime  from "../components/generic/DisplayTime.js";
@@ -10,6 +10,9 @@ import DisplayRounds from "../components/generic/DisplayRounds";
 
 const Timer = ({ duration, rounds, index, type, isHome }) => {
   const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime} = useContext(AppContext);
+  
+  const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
+
   const [time, setTime] = useState(0);
   const active = activeIndex === index; 
 
@@ -21,6 +24,12 @@ const Timer = ({ duration, rounds, index, type, isHome }) => {
       setActiveIndex(0);
       setTime(0);
       setProgressTime(0);
+
+      //add to history log. TODO: new entries
+      let existingEntries = JSON.parse(localStorage.getItem("myHistoryQueue"));
+      if(existingEntries == null) existingEntries = [];
+      existingEntries.push(queue);
+      setHistoryQueue(existingEntries);
 
       return;
     }
