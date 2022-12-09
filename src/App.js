@@ -73,11 +73,11 @@ const Nav = () => {
 };
 
 const LoadOnceFromQueryString = () => {
-//TODO: Support 0-3
+
     const {setQueue} = useContext(AppContext);
     const queryParams = new URLSearchParams(window.location.search);
     let newQueue = [];
-    if(queryParams.has('t0')){
+    if(queryParams.has('t0')||(queryParams.has('t1')||(queryParams.has('t2')))){
 
       let d0 = queryParams.has("d0") ? parseInt(queryParams.get("d0"), 0) : 0;
       let t0 = queryParams.get("t0");
@@ -91,10 +91,9 @@ const LoadOnceFromQueryString = () => {
       let t2 = queryParams.get("t2");
       let r2 = queryParams.has("r2") ? parseInt(queryParams.get("r2"), 0) : 0;
 
-      newQueue = [
-        {duration: d0, type: t0, rounds: r0},
-        {duration: d1, type: t1, rounds: r1},
-        {duration: d2, type: t2, rounds: r2}]
+      if(t0 !== null) newQueue.push({duration: d0, type: t0, rounds: r0});
+      if(t1 !== null) newQueue.push({duration: d1, type: t1, rounds: r1});
+      if(t2 !== null) newQueue.push({duration: d2, type: t2, rounds: r2});
     }
 
     useEffect(() => {

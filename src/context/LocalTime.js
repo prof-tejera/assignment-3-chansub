@@ -20,6 +20,7 @@ const Timer = ({ duration, rounds, index, type, isHome }) => {
       setPaused(true);
       setActiveIndex(0);
       setTime(0);
+      setProgressTime(0);
 
       return;
     }
