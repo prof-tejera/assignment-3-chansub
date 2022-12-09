@@ -77,7 +77,7 @@ const LoadOnceFromQueryString = () => {
     const {setQueue} = useContext(AppContext);
     const queryParams = new URLSearchParams(window.location.search);
     let newQueue = [];
-    if(window.location.search){
+    if(queryParams.has('t0')){
 
       let d0 = parseInt(queryParams.get("d0"), 0);;
       let t0 = queryParams.get("t0");
@@ -96,8 +96,8 @@ const LoadOnceFromQueryString = () => {
     }
 
     useEffect(() => {
-      console.log("Load once only myLS", newQueue);
-      if(newQueue.length > 0)setQueue(newQueue);
+      console.log("Load once only", newQueue);
+      if(newQueue.length > 0) setQueue(newQueue);
     }, []); 
   
   return null
@@ -142,7 +142,6 @@ const Inner = (props) => {
                 duration: secondsStopwatch,
                 type: 'Stopwatch'
               });
-              SetQueryString();
             } }
           >
           </Button>
@@ -158,7 +157,6 @@ const Inner = (props) => {
                 duration: secondsCountdown,
                 type: 'Countdown'
               });
-              SetQueryString();
             } }
           >
           </Button>
@@ -179,7 +177,6 @@ const Inner = (props) => {
                 type: 'XY',
                 rounds: roundsXY
               });
-              SetQueryString();
             } }
           >
           </Button>
@@ -200,7 +197,6 @@ const Inner = (props) => {
                 type: 'Tabata',
                 rounds: roundsTabata
               });
-              SetQueryString();
             } }
           >
           </Button>
@@ -227,7 +223,7 @@ const Inner = (props) => {
  
   function SetQueryString(){
     //grab queue and turn into querystring
-    let qs = '?q=1';
+    let qs = '?q=';
     for(let i in queue){
       if(i < 3){
         qs += '&d'+i+'='+queue[i].duration;
@@ -259,6 +255,8 @@ const Inner = (props) => {
         <Button onClick={reset} type="stop" text="End" disabled={(queue.length < 1)}/>
 
         <Button onClick={clear} type="reset" text="Reset" disabled={(queue.length < 1)}/>
+
+        <Button onClick={() => SetQueryString()} text="Update URL"/>
 
         <div className="queue" style={QueueStyle}>
           {queue.map((t, i) => (
