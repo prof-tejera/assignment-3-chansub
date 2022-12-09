@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { usePersistedState } from "../hooks";
-import { useNavigate} from "react-router-dom";
 
 export const AppContext = React.createContext({});
 
 const AppProvider = ({ children }) => {
-  const [queue, setQueue] = usePersistedState('myCurrentWorkout',[]);
-  //const [queue, setQueue] = useState([]);
+  //const [queue, setQueue] = usePersistedState('myCurrentWorkout',[]); //we are not storing this in local storage
+  const [queue, setQueue] = useState([]);
   const [paused, setPaused] = usePersistedState('myPause',true);
   const [progressTime, setProgressTime] = usePersistedState('myProgressTime',0);
   const [activeIndex, setActiveIndex] = usePersistedState('myActiveIndex',0);
@@ -18,7 +17,7 @@ const AppProvider = ({ children }) => {
         setActiveIndex,
         paused,
         setPaused,
-        reset: () => {
+        reset: () => {   
           setActiveIndex(0);
           setPaused(true);
         },

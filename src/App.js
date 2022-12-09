@@ -72,18 +72,36 @@ const Nav = () => {
   );
 };
 
-// const LoadOnceComponent = () => {
-//   const {setQueue} = useContext(AppContext);
-//   const [myLS,setMyLS] = useLocalStorage([],'CURRENT-WORKOUT');
+const LoadOnceFromQueryString = () => {
+//TODO: Support 0-3
+    const {setQueue} = useContext(AppContext);
+    const queryParams = new URLSearchParams(window.location.search);
+    let newQueue = [];
+    if(window.location.search){
 
-//   useEffect(() => {
-//     console.log("Load once only myLS", myLS);
-//     if(myLS.length > 0)setQueue(myLS);
-//   }, []); 
+      let d0 = parseInt(queryParams.get("d0"), 0);;
+      let t0 = queryParams.get("t0");
+      let r0 = parseInt(queryParams.get("r0"), 0);;
+      let d1 = parseInt(queryParams.get("d1"), 0);;
+      let t1 = queryParams.get("t1");
+      let r1 = parseInt(queryParams.get("r1"), 0);;
+      let d2 = parseInt(queryParams.get("d2"), 0);;
+      let t2 = queryParams.get("t2");
+      let r2 = parseInt(queryParams.get("r2"), 0);;
+
+      newQueue = [
+        {duration: d0, type: t0, round: r0},
+        {duration: d1, type: t1, round: r1},
+        {duration: d2, type: t2, round: r2}]
+    }
+
+    useEffect(() => {
+      console.log("Load once only myLS", newQueue);
+      if(newQueue.length > 0)setQueue(newQueue);
+    }, []); 
   
-//   return null
-// }
-
+  return null
+}
 
 
 const Timer = LocalTime;
@@ -103,24 +121,6 @@ const Inner = (props) => {
   const navigate = useNavigate();
   
   
-
-  //On Page load, create queue from querystring
-  //  const myQS = searchParams.toString().split('&pos=');
-  //  console.log("myQS",myQS);
-  //  for(let q in myQS){
-  //   let item = myQS[q];
-  //   var params = new URLSearchParams(item);
-  //   let d = params.get('duration');
-  //   let t = params.get('type');
-  //   let r = params.get('rounds');
-  //   console.log(d, t, r);
-  //   if(d !== null){
-  //     //addItem here would cause an infinite loop
-  //   }
-  // }
-
- 
-
     
   function ShowSelections(){
     if(isHome === 'yes'){
@@ -227,11 +227,12 @@ const Inner = (props) => {
  
   function SetQueryString(){
     //grab queue and turn into querystring
-    let qs = '?';
+    let qs = '?q=1';
     for(let i in queue){
       if(i < 3){
-        let qsItem = new URLSearchParams(queue[i]);
-        qs += qsItem + "&pos=&";
+        qs += '&d'+i+'='+queue[i].duration;
+        qs += '&t'+i+'='+queue[i].type;
+        if(queue[i].rounds) qs += '&r'+i+'='+queue[i].rounds;
       }
     }
     console.log("QS is", qs);
@@ -273,7 +274,7 @@ const App = () => {
   return (
     <AppProvider>
 
-    {/* <LoadOnceComponent/> */}
+    <LoadOnceFromQueryString/>
 
     <Container>
       <Router>
