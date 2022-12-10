@@ -9,7 +9,9 @@ import AppProvider, { AppContext } from "./context/ContextProvider";
 import {DropdownTime, DropdownRounds} from "./components/generic/Dropdown";
 import Button from "./components/generic/Button";
 import Panel from "./components/generic/Panel";
-import DisplayTime  from "./components/generic/DisplayTime.js";
+import DisplayTime  from "./components/generic/DisplayTime";
+import Textbox  from "./components/generic/Textbox";
+
 import { convertToMinSec } from "./utils/helpers";
 import { useNavigate} from "react-router-dom";
 
@@ -34,7 +36,7 @@ const Body = styled.div`
   padding: 20px;
   margin: 10px;
   font-size: 18px;
-  width: 500px;
+  width: 800px;
   text-align: center;
   background-color: lightgrey;
   border-radius: 3%;
@@ -77,7 +79,7 @@ const Nav = () => {
 };
 
 const LoadOnceFromQueryString = () => {
-
+  
     const {setQueue} = useContext(AppContext);
     const queryParams = new URLSearchParams(window.location.search);
     let newQueue = [];
@@ -100,8 +102,8 @@ const LoadOnceFromQueryString = () => {
       if(t2 !== null) newQueue.push({duration: d2, type: t2, rounds: r2});
     }
 
+    //load once only, if from QueryString
     useEffect(() => {
-      console.log("Load once only", newQueue);
       if(newQueue.length > 0) setQueue(newQueue);
        // eslint-disable-next-line 
     }, []); 
@@ -124,9 +126,16 @@ const Inner = (props) => {
   const [secondsXY, setSecondsXY] = useState(initialSeconds);
   const [roundsTabata, setRoundsTabata] = useState(1);
   const [secondsTabata, setSecondsTabata] = useState(initialSeconds);
+ 
+  const [descStopwatch, setDescStopwatch] = useState('');
+  const [descCountdown, setDescCountdown] = useState('');
+  const [descXY, setDescXY] = useState('');
+  const [descTabata, setDescTabata] = useState('');
+  
   const navigate = useNavigate();
+
   
-  
+
     
   function ShowSelections(){
     if(isHome === 'yes'){
@@ -142,31 +151,45 @@ const Inner = (props) => {
           Stopwatch <DropdownTime id="selectStopwatch" value={secondsStopwatch} onChange={(e) => {
             setSecondsStopwatch(e.target.value);
           } } />
-          <Button text="Add"
-            onClick={() => {
-              addItem({
-                duration: secondsStopwatch,
-                type: 'Stopwatch'
-              });
-            } }
-          >
-          </Button>
+          <div>
+            Description:&nbsp;<Textbox placeholder="Enter a description" className="stopwatchTextbox" id="stopwatchTextbox" maxLength="100" value={descStopwatch} onChange={e => setDescStopwatch(e.target.value)}/>
+            
+            <Button text="Add"
+              onClick={() => {
+                addItem({
+                  duration: secondsStopwatch,
+                  type: 'Stopwatch',
+                  desc: descStopwatch
+                });
+              } }
+            >
+            </Button>
+          </div>
         </Panel>
-      
+
+        <hr/>
+
         <Panel>
           Countdown <DropdownTime id="selectCountdown" value={secondsCountdown} onChange={(e) => {
             setSecondsCountdown(e.target.value);
           } } />
-          <Button text="Add"
-            onClick={() => {
-              addItem({
-                duration: secondsCountdown,
-                type: 'Countdown'
-              });
-            } }
-          >
-          </Button>
+          <div>
+          Description:&nbsp;<Textbox placeholder="Enter a description" className="countdownTextbox" id="countdownTextbox" maxLength="100" value={descCountdown} onChange={e => setDescCountdown(e.target.value)}/>
+
+            <Button text="Add"
+              onClick={() => {
+                addItem({
+                  duration: secondsCountdown,
+                  type: 'Countdown',
+                  desc: descCountdown
+                });
+              } }
+            >
+            </Button>
+          </div>
         </Panel>
+
+        <hr/>
 
         <Panel>
           XY <DropdownRounds id="selectXYRounds" value={roundsXY} onChange={(e) => {
@@ -176,17 +199,24 @@ const Inner = (props) => {
           <DropdownTime id="selectXY" value={secondsXY} onChange={(e) => {
             setSecondsXY(e.target.value);
           } } />  each
+          <div>
+          Description:&nbsp;<Textbox placeholder="Enter a description" className="XYTextbox" id="XYTextbox" maxLength="100" value={descXY} onChange={e => setDescXY(e.target.value)}/>
+
           <Button text="Add"
             onClick={() => {
               addItem({
                 duration: secondsXY * roundsXY,
                 type: 'XY',
-                rounds: roundsXY
+                rounds: roundsXY,
+                desc: descXY
               });
             } }
           >
           </Button>
+          </div>
         </Panel>
+
+        <hr/>
 
         <Panel>
           Tabata <DropdownRounds id="selectTabataRounds" value={roundsTabata} onChange={(e) => {
@@ -196,18 +226,26 @@ const Inner = (props) => {
           <DropdownTime id="selectTabata" value={secondsTabata} onChange={(e) => {
             setSecondsTabata(e.target.value);
           } } />  each
+          <div>
+          Description:&nbsp;<Textbox placeholder="Enter a description" className="tabataTextbox" id="tabataTextbox" maxLength="100" value={descTabata} onChange={e => setDescTabata(e.target.value)}/>
           <Button text="Add"
             onClick={() => {
               addItem({
                 duration: secondsTabata * roundsTabata,
                 type: 'Tabata',
-                rounds: roundsTabata
+                rounds: roundsTabata,
+                desc: descTabata
               });
             } }
           >
           </Button>
+          </div>
 
-        </Panel></>
+        </Panel>
+        
+        <hr/>
+
+        </>
     )
     }
   }
@@ -266,7 +304,7 @@ const Inner = (props) => {
 
         <div className="queue" style={QueueStyle}>
           {queue.map((t, i) => (
-            <Timer key={i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} isHome={isHome}/>
+            <Timer key={i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} desc={t.desc} isHome={isHome}/>
           ))}
         </div>  
 

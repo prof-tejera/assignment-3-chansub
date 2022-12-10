@@ -8,7 +8,7 @@ import Button from "../components/generic/Button";
 import Panel from "../components/generic/Panel";
 import DisplayRounds from "../components/generic/DisplayRounds";
 
-const Timer = ({ duration, rounds, index, type, isHome }) => {
+const Timer = ({ duration, rounds, index, type, isHome, desc }) => {
   const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime} = useContext(AppContext);
   
   const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
@@ -47,10 +47,10 @@ const Timer = ({ duration, rounds, index, type, isHome }) => {
 
   function DisplayRoundsTime(){
     if(type === 'XY'||(type === 'Tabata')){
-      return <><DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration/rounds)} /></>
+      return <><DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration/rounds)} /> <br/>Description: {desc}</>
     }
     else{
-      return <><DisplayTime time={convertToMinSec(duration)}/></>
+      return <><DisplayTime time={convertToMinSec(duration)}/> <br/>Description: {desc}</>
     }
   }
 
