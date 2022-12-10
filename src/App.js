@@ -152,8 +152,12 @@ const Inner = (props) => {
             setSecondsStopwatch(e.target.value);
           } } />
           <div>
-            Description:&nbsp;<Textbox placeholder="Enter a description" className="stopwatchTextbox" id="stopwatchTextbox" maxLength="100" value={descStopwatch} onChange={e => setDescStopwatch(e.target.value)}/>
-            
+            Description:&nbsp;
+            {/* <Textbox placeholder="Enter a description" className="stopwatchTextbox" id="stopwatchTextbox" maxLength="100" value={descStopwatch} onChange={e => setDescStopwatch(e.target.value)}/>
+             */}
+
+<input type="text" name="stopwatchTextbox" value={descStopwatch} onChange={e => setDescStopwatch(e.target.value)}/>
+
             <Button text="Add"
               onClick={() => {
                 addItem({
