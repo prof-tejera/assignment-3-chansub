@@ -133,125 +133,10 @@ const Inner = (props) => {
   const [descTabata, setDescTabata] = useState('');
   
   const navigate = useNavigate();
-
   
-
-    
-  function ShowSelections(){
-    if(isHome === 'yes'){
-      return <Link to="/add">Add</Link>
-    }
-    if(isHome === 'no'){
-
-    return(
-      <>
-      <Link to="/">Home</Link>
-     
-        <Panel> 
-          Stopwatch <DropdownTime id="selectStopwatch" value={secondsStopwatch} onChange={(e) => {
-            setSecondsStopwatch(e.target.value);
-          } } />
-          <div>
-            Description:&nbsp;
-            {/* <Textbox placeholder="Enter a description" className="stopwatchTextbox" id="stopwatchTextbox" maxLength="100" value={descStopwatch} onChange={e => setDescStopwatch(e.target.value)}/>
-             */}
-
-<input type="text" name="stopwatchTextbox" value={descStopwatch} onChange={e => setDescStopwatch(e.target.value)}/>
-
-            <Button text="Add"
-              onClick={() => {
-                addItem({
-                  duration: secondsStopwatch,
-                  type: 'Stopwatch',
-                  desc: descStopwatch
-                });
-              } }
-            >
-            </Button>
-          </div>
-        </Panel>
-
-        <hr/>
-
-        <Panel>
-          Countdown <DropdownTime id="selectCountdown" value={secondsCountdown} onChange={(e) => {
-            setSecondsCountdown(e.target.value);
-          } } />
-          <div>
-          Description:&nbsp;<Textbox placeholder="Enter a description" className="countdownTextbox" id="countdownTextbox" maxLength="100" value={descCountdown} onChange={e => setDescCountdown(e.target.value)}/>
-
-            <Button text="Add"
-              onClick={() => {
-                addItem({
-                  duration: secondsCountdown,
-                  type: 'Countdown',
-                  desc: descCountdown
-                });
-              } }
-            >
-            </Button>
-          </div>
-        </Panel>
-
-        <hr/>
-
-        <Panel>
-          XY <DropdownRounds id="selectXYRounds" value={roundsXY} onChange={(e) => {
-            setRoundsXY(e.target.value);
-          } } />
-          &nbsp;@&nbsp;
-          <DropdownTime id="selectXY" value={secondsXY} onChange={(e) => {
-            setSecondsXY(e.target.value);
-          } } />  each
-          <div>
-          Description:&nbsp;<Textbox placeholder="Enter a description" className="XYTextbox" id="XYTextbox" maxLength="100" value={descXY} onChange={e => setDescXY(e.target.value)}/>
-
-          <Button text="Add"
-            onClick={() => {
-              addItem({
-                duration: secondsXY * roundsXY,
-                type: 'XY',
-                rounds: roundsXY,
-                desc: descXY
-              });
-            } }
-          >
-          </Button>
-          </div>
-        </Panel>
-
-        <hr/>
-
-        <Panel>
-          Tabata <DropdownRounds id="selectTabataRounds" value={roundsTabata} onChange={(e) => {
-            setRoundsTabata(e.target.value);
-          } } />
-          &nbsp;@&nbsp;
-          <DropdownTime id="selectTabata" value={secondsTabata} onChange={(e) => {
-            setSecondsTabata(e.target.value);
-          } } />  each
-          <div>
-          Description:&nbsp;<Textbox placeholder="Enter a description" className="tabataTextbox" id="tabataTextbox" maxLength="100" value={descTabata} onChange={e => setDescTabata(e.target.value)}/>
-          <Button text="Add"
-            onClick={() => {
-              addItem({
-                duration: secondsTabata * roundsTabata,
-                type: 'Tabata',
-                rounds: roundsTabata,
-                desc: descTabata
-              });
-            } }
-          >
-          </Button>
-          </div>
-
-        </Panel>
-        
-        <hr/>
-
-        </>
-    )
-    }
+  let link = <Link to="/">Home</Link>;
+  if(isHome === 'yes') {
+    link = <Link to="/add">Add</Link>;
   }
 
   function ShowTotalDuration(){
@@ -286,8 +171,115 @@ const Inner = (props) => {
 
   return (
     <div>
+    
+    <p>{link}</p>
+     
+    <Panel className={`timer-selection-container ${(isHome == 'yes')?'hidden':''}`}
+>
 
-        <ShowSelections/>
+     <Panel> 
+       Stopwatch <DropdownTime id="selectStopwatch" value={secondsStopwatch} onChange={(e) => {
+         setSecondsStopwatch(e.target.value);
+       } } />
+       <div>
+         Description:&nbsp;
+         <Textbox placeholder="Enter a description" className="stopwatchTextbox" id="stopwatchTextbox" maxLength="100" value={descStopwatch} onChange={e => setDescStopwatch(e.target.value)}/>
+         
+         <Button text="Add"
+           onClick={() => {
+             addItem({
+               duration: secondsStopwatch,
+               type: 'Stopwatch',
+               desc: descStopwatch
+             });
+           } }
+         >
+         </Button>
+       </div>
+     </Panel>
+
+     <hr/>
+
+     <Panel>
+       Countdown <DropdownTime id="selectCountdown" value={secondsCountdown} onChange={(e) => {
+         setSecondsCountdown(e.target.value);
+       } } />
+       <div>
+       Description:&nbsp;<Textbox placeholder="Enter a description" className="countdownTextbox" id="countdownTextbox" maxLength="100" value={descCountdown} onChange={e => setDescCountdown(e.target.value)}/>
+
+         <Button text="Add"
+           onClick={() => {
+             addItem({
+               duration: secondsCountdown,
+               type: 'Countdown',
+               desc: descCountdown
+             });
+           } }
+         >
+         </Button>
+       </div>
+     </Panel>
+
+     <hr/>
+
+     <Panel>
+       XY <DropdownRounds id="selectXYRounds" value={roundsXY} onChange={(e) => {
+         setRoundsXY(e.target.value);
+       } } />
+       &nbsp;@&nbsp;
+       <DropdownTime id="selectXY" value={secondsXY} onChange={(e) => {
+         setSecondsXY(e.target.value);
+       } } />  each
+       <div>
+       Description:&nbsp;<Textbox placeholder="Enter a description" className="XYTextbox" id="XYTextbox" maxLength="100" value={descXY} onChange={e => setDescXY(e.target.value)}/>
+
+       <Button text="Add"
+         onClick={() => {
+           addItem({
+             duration: secondsXY * roundsXY,
+             type: 'XY',
+             rounds: roundsXY,
+             desc: descXY
+           });
+         } }
+       >
+       </Button>
+       </div>
+     </Panel>
+
+     <hr/>
+
+     <Panel>
+       Tabata <DropdownRounds id="selectTabataRounds" value={roundsTabata} onChange={(e) => {
+         setRoundsTabata(e.target.value);
+       } } />
+       &nbsp;@&nbsp;
+       <DropdownTime id="selectTabata" value={secondsTabata} onChange={(e) => {
+         setSecondsTabata(e.target.value);
+       } } />  each
+       <div>
+       Description:&nbsp;<Textbox placeholder="Enter a description" className="tabataTextbox" id="tabataTextbox" maxLength="100" value={descTabata} onChange={e => setDescTabata(e.target.value)}/>
+       <Button text="Add"
+         onClick={() => {
+           addItem({
+             duration: secondsTabata * roundsTabata,
+             type: 'Tabata',
+             rounds: roundsTabata,
+             desc: descTabata
+           });
+         } }
+       >
+       </Button>
+       </div>
+
+     </Panel>
+
+
+    </Panel>
+     
+     
+
+
 
         <ShowTotalDuration/>
 

@@ -1,7 +1,12 @@
 .panel.yellowBG{
     background-color: yellow;
+    padding-bottom:20px;
 }
 
 .panel.whiteBG{
     background-color: white;;
+}
+
+.timer-selection-container.hidden{
+    display:none;
 }

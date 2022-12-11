@@ -19,7 +19,7 @@ const HistoryView = () => {
                 <li key={index}><b>Workout</b> {index}
                     <ul>
                         {item.map((item2,index2) => (
-                            <li key={index2}>{item2.type}, {item2.duration} seconds, {item2.rounds} round</li>
+                            <li key={index2}>type: {item2.type}; duration: {item2.duration}s, rounds:{item2.rounds}; desc:{item2.desc} </li>
                         ))}
                     </ul>
                 </li>
