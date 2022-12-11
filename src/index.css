@@ -32,6 +32,9 @@ th {
   padding: 8px;
 }
 
+nav{
+  float: left;
+}
 nav ul {
   max-width: 200px;
 }

@@ -5,6 +5,7 @@
 
 .panel.whiteBG{
     background-color: white;;
+    padding-bottom:20px;
 }
 
 .timer-selection-container.hidden{

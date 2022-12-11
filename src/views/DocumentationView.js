@@ -12,7 +12,6 @@ import DisplayRounds from "../components/generic/DisplayRounds";
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
 `;
 
 const Title = styled.div`
