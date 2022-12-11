@@ -11,7 +11,7 @@ import DisplayRounds from "../components/generic/DisplayRounds";
 const Timer = ({ duration, rounds, index, type, isHome, desc }) => {
   const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime} = useContext(AppContext);
   
-  const [setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
+  const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
 
   const [time, setTime] = useState(0);
   const active = activeIndex === index; 
@@ -25,7 +25,7 @@ const Timer = ({ duration, rounds, index, type, isHome, desc }) => {
       setTime(0);
       setProgressTime(0);
 
-      //add to history log. TODO: new entries
+      //add to history log.
       let existingEntries = JSON.parse(localStorage.getItem("myHistoryQueue"));
       if(existingEntries == null) existingEntries = [];
       existingEntries.push(queue);

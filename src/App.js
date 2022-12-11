@@ -161,6 +161,7 @@ const Inner = (props) => {
       if(i < 3){
         qs += '&d'+i+'='+queue[i].duration;
         qs += '&t'+i+'='+queue[i].type;
+        qs += '&desc'+i+'='+encodeURIComponent(queue[i].desc);
         if(queue[i].rounds) qs += '&r'+i+'='+queue[i].rounds;
       }
     }
@@ -278,9 +279,6 @@ const Inner = (props) => {
 
 
     </Panel>
-     
-     
-
 
 
         <ShowTotalDuration/>
