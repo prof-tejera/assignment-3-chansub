@@ -173,6 +173,7 @@ const Inner = (props) => {
     <div>
     
     <p>{link}</p>
+    <hr/>
      
     <Panel className={`timer-selection-container ${(isHome == 'yes')?'hidden':''}`}
 >
@@ -182,7 +183,6 @@ const Inner = (props) => {
          setSecondsStopwatch(e.target.value);
        } } />
        <div>
-         Description:&nbsp;
          <Textbox placeholder="Enter a description" className="stopwatchTextbox" id="stopwatchTextbox" maxLength="100" value={descStopwatch} onChange={e => setDescStopwatch(e.target.value)}/>
          
          <Button text="Add"
@@ -231,7 +231,7 @@ const Inner = (props) => {
          setSecondsXY(e.target.value);
        } } />  each
        <div>
-       Description:&nbsp;<Textbox placeholder="Enter a description" className="XYTextbox" id="XYTextbox" maxLength="100" value={descXY} onChange={e => setDescXY(e.target.value)}/>
+       <Textbox placeholder="Enter a description" className="XYTextbox" id="XYTextbox" maxLength="100" value={descXY} onChange={e => setDescXY(e.target.value)}/>
 
        <Button text="Add"
          onClick={() => {
@@ -258,7 +258,7 @@ const Inner = (props) => {
          setSecondsTabata(e.target.value);
        } } />  each
        <div>
-       Description:&nbsp;<Textbox placeholder="Enter a description" className="tabataTextbox" id="tabataTextbox" maxLength="100" value={descTabata} onChange={e => setDescTabata(e.target.value)}/>
+       <Textbox placeholder="Enter a description" className="tabataTextbox" id="tabataTextbox" maxLength="100" value={descTabata} onChange={e => setDescTabata(e.target.value)}/>
        <Button text="Add"
          onClick={() => {
            addItem({
@@ -271,6 +271,8 @@ const Inner = (props) => {
        >
        </Button>
        </div>
+
+       <hr/>
 
      </Panel>
 
