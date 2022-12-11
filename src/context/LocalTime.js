@@ -11,7 +11,7 @@ import DisplayRounds from "../components/generic/DisplayRounds";
 const Timer = ({ duration, rounds, index, type, isHome, desc }) => {
   const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime} = useContext(AppContext);
   
-  const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
+  const [setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
 
   const [time, setTime] = useState(0);
   const active = activeIndex === index; 

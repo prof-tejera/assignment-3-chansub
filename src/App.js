@@ -175,7 +175,7 @@ const Inner = (props) => {
     <p>{link}</p>
     <hr/>
      
-    <Panel className={`timer-selection-container ${(isHome == 'yes')?'hidden':''}`}
+    <Panel className={`timer-selection-container ${(isHome === 'yes')?'hidden':''}`}
 >
 
      <Panel> 
