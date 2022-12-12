@@ -31,6 +31,11 @@ const AppProvider = ({ children }) => {
         addItem: (item) => {
           setQueue((q) => [...q, item]);
         },
+        editItem: (item, index) => {
+          const updatedQ = queue.map((q,i) => (i === index ? item : q));
+          setQueue(updatedQ);
+          console.log("Updating to new seconds on index:", index, " with new seconds:", item.duration);
+        },
         removeItem: (index) => setQueue(queue.filter((q, i) => i !== index)),
         queue,
         setQueue,
