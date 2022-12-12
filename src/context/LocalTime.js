@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useInterval, usePersistedState } from "../hooks";
 import { AppContext } from "./ContextProvider";
+import { Link } from 'react-router-dom';
 
 import DisplayTime  from "../components/generic/DisplayTime.js";
 import { convertToMinSec } from "../utils/helpers";
@@ -8,7 +9,7 @@ import Button from "../components/generic/Button";
 import Panel from "../components/generic/Panel";
 import DisplayRounds from "../components/generic/DisplayRounds";
 
-const Timer = ({ duration, rounds, index, type, isHome, desc }) => {
+const Timer = ({ id, duration, rounds, index, type, isHome, desc }) => {
   const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime} = useContext(AppContext);
   
   const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
@@ -47,10 +48,10 @@ const Timer = ({ duration, rounds, index, type, isHome, desc }) => {
 
   function DisplayRoundsTime(){
     if(type === 'XY'||(type === 'Tabata')){
-      return <><DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration/rounds)} /> <br/>Description: {desc}</>
+      return <><DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration/rounds)} /> {(desc) ? '<br/>Description: {desc}' : ''}</>
     }
     else{
-      return <><DisplayTime time={convertToMinSec(duration)}/> <br/>Description: {desc}</>
+      return <><DisplayTime time={convertToMinSec(duration)}/> {(desc) ? '<br/>Description: {desc}' : ''}</>
     }
   }
 
@@ -78,9 +79,12 @@ const Timer = ({ duration, rounds, index, type, isHome, desc }) => {
   }
  
   return (
-      <Panel id={'q'+index} className={active ? "yellowBG" : "whiteBG"}>
+      <Panel className={active ? "yellowBG" : "whiteBG"}>
+        {/* <Link to={`/${index}`}>Edit</Link> */}
+        <Button onClick={() => console.log("edit index:", index)} text={`Edit ${index}`}/>
         <Button onClick={() => removeItem(index)} style={{display: (isHome === 'no') ? 'inline-block' : 'none'}} type="remove" text="Remove"/>
         {type} - <DisplayRoundsTime/> <DisplayProgress/>
+
       </Panel>
   );
 };

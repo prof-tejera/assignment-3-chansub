@@ -29,7 +29,6 @@ const QueueStyle = {
 const BodyContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
 `;
 const Body = styled.div`
   border: 1px solid gray;
@@ -179,7 +178,7 @@ const Inner = (props) => {
     <Panel className={`timer-selection-container ${(isHome === 'yes')?'hidden':''}`}
 >
 
-     <Panel> 
+     <Panel className='addStopwatch'> 
        Stopwatch <DropdownTime id="selectStopwatch" value={secondsStopwatch} onChange={(e) => {
          setSecondsStopwatch(e.target.value);
        } } />
@@ -201,7 +200,7 @@ const Inner = (props) => {
 
      <hr/>
 
-     <Panel>
+     <Panel className='addCountdown'>
        Countdown <DropdownTime id="selectCountdown" value={secondsCountdown} onChange={(e) => {
          setSecondsCountdown(e.target.value);
        } } />
@@ -223,7 +222,7 @@ const Inner = (props) => {
 
      <hr/>
 
-     <Panel>
+     <Panel className='addXY'>
        XY <DropdownRounds id="selectXYRounds" value={roundsXY} onChange={(e) => {
          setRoundsXY(e.target.value);
        } } />
@@ -250,7 +249,7 @@ const Inner = (props) => {
 
      <hr/>
 
-     <Panel>
+     <Panel className='addTabata'>
        Tabata <DropdownRounds id="selectTabataRounds" value={roundsTabata} onChange={(e) => {
          setRoundsTabata(e.target.value);
        } } />
@@ -300,7 +299,7 @@ const Inner = (props) => {
 
         <div className="queue" style={QueueStyle}>
           {queue.map((t, i) => (
-            <Timer key={i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} desc={t.desc} isHome={isHome}/>
+            <Timer key={`q`+i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} desc={t.desc} isHome={isHome}/>
           ))}
         </div>  
 
