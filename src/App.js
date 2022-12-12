@@ -87,18 +87,21 @@ const LoadOnceFromQueryString = () => {
       let d0 = queryParams.has("d0") ? parseInt(queryParams.get("d0"), 0) : 0;
       let t0 = queryParams.get("t0");
       let r0 = queryParams.has("r0") ? parseInt(queryParams.get("r0"), 0) : 0;
+      let desc0 = queryParams.get("desc0");
 
       let d1 = queryParams.has("d1") ? parseInt(queryParams.get("d1"), 0) : 0;
       let t1 = queryParams.get("t1");
       let r1 = queryParams.has("r1") ? parseInt(queryParams.get("r1"), 0) : 0;
+      let desc1 = queryParams.get("desc1");
 
       let d2 = queryParams.has("d2") ? parseInt(queryParams.get("d2"), 0) : 0;
       let t2 = queryParams.get("t2");
       let r2 = queryParams.has("r2") ? parseInt(queryParams.get("r2"), 0) : 0;
+      let desc2 = queryParams.get("desc2");
 
-      if(t0 !== null) newQueue.push({duration: d0, type: t0, rounds: r0});
-      if(t1 !== null) newQueue.push({duration: d1, type: t1, rounds: r1});
-      if(t2 !== null) newQueue.push({duration: d2, type: t2, rounds: r2});
+      if(t0 !== null) newQueue.push({duration: d0, type: t0, rounds: r0, desc: desc0});
+      if(t1 !== null) newQueue.push({duration: d1, type: t1, rounds: r1, desc: desc1});
+      if(t2 !== null) newQueue.push({duration: d2, type: t2, rounds: r2, desc: desc2});
     }
 
     //load once only, if from QueryString

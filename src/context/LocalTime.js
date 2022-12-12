@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { useInterval, usePersistedState } from "../hooks";
 import { AppContext } from "./ContextProvider";
-import { Link } from 'react-router-dom';
 
 import DisplayTime  from "../components/generic/DisplayTime.js";
 import { convertToMinSec } from "../utils/helpers";
@@ -20,7 +19,7 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc }) => {
 
   const timerObj = {id:id, duration:duration, rounds:rounds, index:index,type:type,desc:desc};
 
-  const [visible, setVisible] = useState(false);
+  const [editVisible, setEditVisible] = useState(false);
 
   useInterval(() => {
     //if end has reached, reset 
@@ -88,14 +87,14 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc }) => {
         
         {/* <Button onClick={() => console.log("edit index:", index)} text={`Edit ${index}`}/> */}
 
-        <Button onClick={() => setVisible(!visible)} text={visible ? 'Hide Edit':'Show Edit'}/>
+        <Button onClick={() => setEditVisible(!editVisible)} text={editVisible ? 'Hide Edit':'Show Edit'}/>
 
         <Button onClick={() => removeItem(index)} style={{display: (isHome === 'no') ? 'inline-block' : 'none'}} type="remove" text="Remove"/>
         {type} - <DisplayRoundsTime/> <DisplayProgress/>
       
-        {/* //TODO: on button "edit" click, toggle <TimerEditable/> components */}
+        {/* //TODO: on button "edit" click, toggle <TimerEditable/> components.  */}
 
-        {visible && 
+        {editVisible && 
            <TimerEditable data={timerObj}>susana</TimerEditable>
         }
 
