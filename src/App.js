@@ -133,8 +133,10 @@ const Inner = (props) => {
   const [secondsCountdown, setSecondsCountdown] = useState(initialSeconds);
   const [roundsXY, setRoundsXY] = useState(1);
   const [secondsXY, setSecondsXY] = useState(initialSeconds);
+  
   const [roundsTabata, setRoundsTabata] = useState(1);
   const [secondsTabata, setSecondsTabata] = useState(initialSeconds);
+  const [secondsTabataRest, setSecondsTabataRest] = useState(initialSeconds);
  
   const [descStopwatch, setDescStopwatch] = useState('');
   const [descCountdown, setDescCountdown] = useState('');
@@ -264,13 +266,18 @@ const Inner = (props) => {
        &nbsp;@&nbsp;
        <DropdownTime id="selectTabata" value={secondsTabata} onChange={(e) => {
          setSecondsTabata(e.target.value);
-       } } />  each
+       } } /> (work)
+
+       <DropdownTime id="selectTabataRest" value={secondsTabataRest} onChange={(e) => {
+         setSecondsTabataRest(e.target.value);
+       } } /> (rest) 
+        each
        <div>
        <Textbox placeholder="Optional description" className="tabataTextbox" id="tabataTextbox" maxLength="100" value={descTabata} onChange={e => setDescTabata(e.target.value)}/>
        <Button text="Add"
          onClick={() => {
            addItem({
-             duration: secondsTabata * roundsTabata,
+             duration: (secondsTabata * roundsTabata) + (secondsTabataRest * roundsTabata),
              type: 'Tabata',
              rounds: roundsTabata,
              desc: descTabata
