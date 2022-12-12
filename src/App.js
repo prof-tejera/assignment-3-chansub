@@ -82,8 +82,9 @@ const LoadOnceFromQueryString = () => {
     const {setQueue} = useContext(AppContext);
     const queryParams = new URLSearchParams(window.location.search);
     let newQueue = [];
-    if(queryParams.has('t0')||(queryParams.has('t1')||(queryParams.has('t2')))){
 
+    if(queryParams.has('t0')||queryParams.has('t1')||queryParams.has('t2')||queryParams.has('t3')){
+      //console.log("count",Array.from(queryParams).length);
       let d0 = queryParams.has("d0") ? parseInt(queryParams.get("d0"), 0) : 0;
       let t0 = queryParams.get("t0");
       let r0 = queryParams.has("r0") ? parseInt(queryParams.get("r0"), 0) : 0;
@@ -99,9 +100,15 @@ const LoadOnceFromQueryString = () => {
       let r2 = queryParams.has("r2") ? parseInt(queryParams.get("r2"), 0) : 0;
       let desc2 = queryParams.get("desc2");
 
+      let d3 = queryParams.has("d3") ? parseInt(queryParams.get("d3"), 0) : 0;
+      let t3 = queryParams.get("t3");
+      let r3 = queryParams.has("r3") ? parseInt(queryParams.get("r3"), 0) : 0;
+      let desc3 = queryParams.get("desc3");
+
       if(t0 !== null) newQueue.push({duration: d0, type: t0, rounds: r0, desc: desc0});
       if(t1 !== null) newQueue.push({duration: d1, type: t1, rounds: r1, desc: desc1});
       if(t2 !== null) newQueue.push({duration: d2, type: t2, rounds: r2, desc: desc2});
+      if(t3 !== null) newQueue.push({duration: d3, type: t3, rounds: r3, desc: desc3});
     }
 
     //load once only, if from QueryString
@@ -158,9 +165,9 @@ const Inner = (props) => {
  
   function SetQueryString(){
     //grab queue and turn into querystring
-    let qs = '?q=';
+    let qs = '?qc='+ queue.length;
     for(let i in queue){
-      if(i < 3){
+      if(i < 4){
         qs += '&d'+i+'='+queue[i].duration;
         qs += '&t'+i+'='+queue[i].type;
         qs += '&desc'+i+'='+encodeURIComponent(queue[i].desc);
@@ -178,9 +185,7 @@ const Inner = (props) => {
     <p>{link}</p>
     <hr/>
      
-    <Panel className={`timer-selection-container ${(isHome === 'yes')?'hidden':''}`}
->
-
+    <Panel className={`timer-selection-container ${(isHome === 'yes')?'hidden':''}`}>
      <Panel className='addStopwatch'> 
        Stopwatch <DropdownTime id="selectStopwatch" value={secondsStopwatch} onChange={(e) => {
          setSecondsStopwatch(e.target.value);
