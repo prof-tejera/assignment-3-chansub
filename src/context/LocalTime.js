@@ -12,6 +12,7 @@ import TimerEditable from "../components/timers/TimerEditable";
 
 const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secondsRest }) => {
   const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime} = useContext(AppContext);
+  // eslint-disable-next-line 
   const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
 
   const [time, setTime] = useState(0);

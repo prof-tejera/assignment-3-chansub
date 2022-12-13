@@ -1,27 +1,28 @@
+import "./HistoryView.css";
 import { usePersistedState } from "../hooks";
 
 const HistoryView = () => {
     
     const [existingEntries] = usePersistedState('myHistoryQueue',[]);
-    //let existingEntries = JSON.parse(localStorage.getItem("myHistoryQueue"));
 
     const ShowHistory = () =>{
-        // for(let i=0; i<existingEntries.length; i++){
-        //     console.log('Workout', i);
-        //     let item = existingEntries[i];
-        //     let itemDetails = item.map((key,index) => {
-        //         console.log('Position:',index,'type:',key.type, key.duration);
-        //     })
-        // }
 
         return (
             existingEntries.map((item,index) => (
-                <li key={index}><b>Workout</b> {index}
-                    <ul>
+                <li key={index} className="workout"><b>Workout</b> {index+1}
+                    <ol>
                         {item.map((item2,index2) => (
-                            <li key={index2}>type: {item2.type}; duration: {item2.duration}s, rounds:{item2.rounds}; desc:{item2.desc} </li>
+                            <li key={index2} className="details">
+                                <span className="workoutType">{item2.type}:</span> 
+                                Total Duration: {item2.duration};  
+                                &nbsp;Seconds: {item2.seconds}; 
+                                {(item2.secondsRest) ? ` Seconds of Rest: ${item2.secondsRest}; ` : ''}
+                                {(item2.rounds) ? ` Rounds: ${item2.rounds}; ` : ' '}
+                                {(item2.desc) ? ` Desc: ${item2.desc}; ` : ''}
+
+                            </li>
                         ))}
-                    </ul>
+                    </ol>
                 </li>
             ))
         );
@@ -30,9 +31,9 @@ const HistoryView = () => {
     
     return(
 
-        <><p>History View</p>
-        
-        <div className="history" >
+        <>
+        <div className="historyView" >
+            <h1 className="heading">History View</h1>
             <ul>
                 <ShowHistory/>
             </ul>

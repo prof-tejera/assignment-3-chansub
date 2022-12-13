@@ -28,12 +28,12 @@ export const usePersistedState = (storageKey, fallbackValue) => {
     const storedValue = window.localStorage.getItem(storageKey);
 
     if (storedValue === null || !storedValue) {
-      console.log('returning fallback', fallbackValue);
+      //console.log('returning fallback', fallbackValue);
       return fallbackValue;
     }
 
     try {
-      console.log('storedValue', storedValue);
+      //console.log('storedValue', storedValue);
       return JSON.parse(storedValue);
     } catch (e) {
       console.log('Error parsing stored value', e);
