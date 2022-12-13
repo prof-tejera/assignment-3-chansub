@@ -89,26 +89,35 @@ const LoadOnceFromQueryString = () => {
       let t0 = queryParams.get("t0");
       let r0 = queryParams.has("r0") ? parseInt(queryParams.get("r0"), 0) : 0;
       let desc0 = queryParams.get("desc0");
+      let s0 = queryParams.has("s0") ? parseInt(queryParams.get("s0"), 0) : 0;
+      let sr0 = queryParams.has("sr0") ? parseInt(queryParams.get("sr0"), 0) : 0;
+
 
       let d1 = queryParams.has("d1") ? parseInt(queryParams.get("d1"), 0) : 0;
       let t1 = queryParams.get("t1");
       let r1 = queryParams.has("r1") ? parseInt(queryParams.get("r1"), 0) : 0;
       let desc1 = queryParams.get("desc1");
+      let s1 = queryParams.has("s1") ? parseInt(queryParams.get("s1"), 0) : 0;
+      let sr1 = queryParams.has("sr1") ? parseInt(queryParams.get("sr1"), 0) : 0;
 
       let d2 = queryParams.has("d2") ? parseInt(queryParams.get("d2"), 0) : 0;
       let t2 = queryParams.get("t2");
       let r2 = queryParams.has("r2") ? parseInt(queryParams.get("r2"), 0) : 0;
       let desc2 = queryParams.get("desc2");
+      let s2 = queryParams.has("s2") ? parseInt(queryParams.get("s2"), 0) : 0;
+      let sr2 = queryParams.has("sr2") ? parseInt(queryParams.get("sr2"), 0) : 0;
 
       let d3 = queryParams.has("d3") ? parseInt(queryParams.get("d3"), 0) : 0;
       let t3 = queryParams.get("t3");
       let r3 = queryParams.has("r3") ? parseInt(queryParams.get("r3"), 0) : 0;
       let desc3 = queryParams.get("desc3");
+      let s3 = queryParams.has("s3") ? parseInt(queryParams.get("s3"), 0) : 0;
+      let sr3 = queryParams.has("sr3") ? parseInt(queryParams.get("sr3"), 0) : 0;
 
-      if(t0 !== null) newQueue.push({duration: d0, type: t0, rounds: r0, desc: desc0});
-      if(t1 !== null) newQueue.push({duration: d1, type: t1, rounds: r1, desc: desc1});
-      if(t2 !== null) newQueue.push({duration: d2, type: t2, rounds: r2, desc: desc2});
-      if(t3 !== null) newQueue.push({duration: d3, type: t3, rounds: r3, desc: desc3});
+      if(t0 !== null) newQueue.push({duration: d0, type: t0, rounds: r0, desc: desc0, seconds: s0, secondsRest: sr0});
+      if(t1 !== null) newQueue.push({duration: d1, type: t1, rounds: r1, desc: desc1, seconds: s1, secondsRest: sr1});
+      if(t2 !== null) newQueue.push({duration: d2, type: t2, rounds: r2, desc: desc2, seconds: s2, secondsRest: sr2});
+      if(t3 !== null) newQueue.push({duration: d3, type: t3, rounds: r3, desc: desc3, seconds: s3, secondsRest: sr3});
     }
 
     //load once only, if from QueryString
@@ -174,6 +183,9 @@ const Inner = (props) => {
         qs += '&t'+i+'='+queue[i].type;
         qs += '&desc'+i+'='+encodeURIComponent(queue[i].desc);
         if(queue[i].rounds) qs += '&r'+i+'='+queue[i].rounds;
+        if(queue[i].seconds) qs += '&s'+i+'='+queue[i].seconds;
+        if(queue[i].secondsRest) qs += '&sr'+i+'='+queue[i].secondsRest;
+
       }
     }
     console.log("QS is", qs);
@@ -200,7 +212,8 @@ const Inner = (props) => {
              addItem({
                duration: secondsStopwatch,
                type: 'Stopwatch',
-               desc: descStopwatch
+               desc: descStopwatch,
+               seconds: secondsStopwatch
              });
            } }
          >
@@ -222,7 +235,8 @@ const Inner = (props) => {
              addItem({
                duration: secondsCountdown,
                type: 'Countdown',
-               desc: descCountdown
+               desc: descCountdown,
+               seconds: secondsCountdown
              });
            } }
          >
@@ -249,7 +263,8 @@ const Inner = (props) => {
              duration: secondsXY * roundsXY,
              type: 'XY',
              rounds: roundsXY,
-             desc: descXY
+             desc: descXY,
+             seconds: secondsXY
            });
          } }
        >
@@ -280,7 +295,9 @@ const Inner = (props) => {
              duration: (secondsTabata * roundsTabata) + (secondsTabataRest * roundsTabata),
              type: 'Tabata',
              rounds: roundsTabata,
-             desc: descTabata
+             desc: descTabata,
+             seconds: secondsTabata,
+             secondsRest: secondsTabataRest
            });
          } }
        >
@@ -314,7 +331,7 @@ const Inner = (props) => {
 
         <div className="queue" style={QueueStyle}>
           {queue.map((t, i) => (
-            <Timer key={`q`+i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} desc={t.desc} isHome={isHome}/>
+            <Timer key={`q`+i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} desc={t.desc} isHome={isHome} seconds={t.seconds} secondsRest={t.secondsRest}/>
           ))}
         </div>  
 

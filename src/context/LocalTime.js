@@ -10,14 +10,14 @@ import DisplayRounds from "../components/generic/DisplayRounds";
 
 import TimerEditable from "../components/timers/TimerEditable";
 
-const Timer = ({ id, duration, rounds, index, type, isHome, desc }) => {
+const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secondsRest }) => {
   const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime} = useContext(AppContext);
   const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
 
   const [time, setTime] = useState(0);
   const active = activeIndex === index; 
 
-  const timerObj = {id:id, duration:duration, rounds:rounds, index:index,type:type,desc:desc};
+  const timerObj = {id:id, duration:duration, rounds:rounds, index:index,type:type,desc:desc,seconds:seconds,secondsRest:secondsRest};
 
   const [editVisible, setEditVisible] = useState(false);
 
@@ -52,10 +52,10 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc }) => {
 
   function DisplayRoundsTime(){
     if(type === 'XY'||(type === 'Tabata')){
-      return <><DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration/rounds)} /> {(desc) ? `<br/>Description: ${desc}` : ''}</>
+      return <><DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration/rounds)} /> {(desc) ? `Description: ${desc}` : ''}</>
     }
     else{
-      return <><DisplayTime time={convertToMinSec(duration)}/> {(desc) ? `<br/>Description: ${desc}` : ''}</>
+      return <><DisplayTime time={convertToMinSec(duration)}/> {(desc) ? `Description: ${desc}` : ''}</>
     }
   }
 
@@ -85,15 +85,11 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc }) => {
   return (<>
       <Panel className={active ? "yellowBG" : "whiteBG"}>
         
-        {/* <Button onClick={() => console.log("edit index:", index)} text={`Edit ${index}`}/> */}
-
         <Button onClick={() => setEditVisible(!editVisible)} text={editVisible ? 'Hide Edit':'Show Edit'}/>
 
         <Button onClick={() => removeItem(index)} style={{display: (isHome === 'no') ? 'inline-block' : 'none'}} type="remove" text="Remove"/>
         {type} - <DisplayRoundsTime/> <DisplayProgress/>
       
-        {/* //TODO: on button "edit" click, toggle <TimerEditable/> components.  */}
-
         {editVisible && 
            <TimerEditable data={timerObj}>susana</TimerEditable>
         }
