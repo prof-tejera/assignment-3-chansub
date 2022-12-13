@@ -15,11 +15,21 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
   const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
 
   const [time, setTime] = useState(0);
+  const [editVisible, setEditVisible] = useState(false);
+  
   const active = activeIndex === index; 
 
-  const timerObj = {id:id, duration:duration, rounds:rounds, index:index,type:type,desc:desc,seconds:seconds,secondsRest:secondsRest};
+  const timerObj = {
+    id:id, 
+    duration:Number(duration) || 0, 
+    rounds: Number(rounds) || 1, 
+    index:index, 
+    type:type, 
+    desc:desc, 
+    seconds:Number(seconds), 
+    secondsRest: Number(secondsRest) || 0, 
+  };
 
-  const [editVisible, setEditVisible] = useState(false);
 
   useInterval(() => {
     //if end has reached, reset 
@@ -52,12 +62,14 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
 
   function DisplayRoundsTime(){
     if(type === 'XY'){
-      return <><DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(seconds)} /></>
+      return <>
+        <DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} * <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(seconds)} /> = <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration)} />
+        </>
     }
     else if(type === 'Tabata'){
       return <>
-        <DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(seconds)} /> work,&nbsp; 
-        <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(secondsRest)} /> rest
+        <DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} * (<DisplayTime label='' myClassName='noPadding' time={convertToMinSec(seconds)} /> work +&nbsp; 
+        <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(secondsRest)} /> rest) = <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration)} />
       </>
     }
     else{
@@ -91,10 +103,14 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
   return (<>
       <Panel className={active ? "yellowBG" : "whiteBG"}>
         
-        <Button onClick={() => setEditVisible(!editVisible)} text={editVisible ? 'Hide Edit':'Show Edit'}/>
+        { (isHome === 'no') && <>
+          <Button onClick={() => setEditVisible(!editVisible)} text={editVisible ? 'Hide Edit':'Show Edit'}/>
 
-        <Button onClick={() => removeItem(index)} style={{display: (isHome === 'no') ? 'inline-block' : 'none'}} type="remove" text="Remove"/>
-        {type} - <DisplayRoundsTime/> 
+          <Button onClick={() => removeItem(index)} style={{display: (isHome === 'no') ? 'inline-block' : 'none'}} type="remove" text="Remove"/>
+        </>
+        }
+        
+        <b>{type}:</b> <DisplayRoundsTime/> 
         
         {(desc) &&
           <div>Description: {desc}</div>
@@ -105,7 +121,7 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
         </div>
         
         {editVisible && 
-           <TimerEditable data={timerObj}>susana</TimerEditable>
+           <TimerEditable data={timerObj}/>
         }
 
       </Panel>

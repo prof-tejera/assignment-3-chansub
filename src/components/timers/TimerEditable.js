@@ -8,9 +8,10 @@ import { AppContext } from "../../context/ContextProvider";
 
 const TimerEditable = ({data}) => {    
     const [seconds, setSeconds] = useState(data.seconds);
-    const [secondsRest, setSecondsRest] = useState(parseInt(data.secondsRest));
+    const [secondsRest, setSecondsRest] = useState(data.secondsRest);
+    const [rounds, setRounds] = useState(data.rounds);
     const [desc, setDesc] = useState(data.desc);
-    const [rounds, setRounds] = useState(data.rounds,0);
+    
     const {editItem} = useContext(AppContext);
 
     return (
@@ -38,10 +39,11 @@ const TimerEditable = ({data}) => {
                 <Textbox placeholder="Optional description " className="itemTextbox" id="itemTextbox" maxLength="100" value={desc} onChange={e => setDesc(e.target.value)}/>
             
                 <Button text="Update Timer"
-                onClick={() => {
+                onClick={() => { 
+                     let ttl = (rounds * seconds) + (rounds * secondsRest);
                      editItem({
                          type: data.type,
-                         duration: seconds,
+                         duration: ttl,
                          desc: desc,
                          rounds: rounds,
                          seconds: seconds,

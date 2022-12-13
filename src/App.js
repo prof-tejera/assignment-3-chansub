@@ -228,7 +228,7 @@ const Inner = (props) => {
          setSecondsCountdown(e.target.value);
        } } />
        <div>
-       Description:&nbsp;<Textbox placeholder="Optional description" className="countdownTextbox" id="countdownTextbox" maxLength="100" value={descCountdown} onChange={e => setDescCountdown(e.target.value)}/>
+       <Textbox placeholder="Optional description" className="countdownTextbox" id="countdownTextbox" maxLength="100" value={descCountdown} onChange={e => setDescCountdown(e.target.value)}/>
 
          <Button text="Add"
            onClick={() => {
@@ -331,7 +331,7 @@ const Inner = (props) => {
 
         <div className="queue" style={QueueStyle}>
           {queue.map((t, i) => (
-            <Timer key={`q`+i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} desc={t.desc} isHome={isHome} seconds={t.seconds} secondsRest={t.secondsRest}/>
+            <Timer id={`q`+i} key={`q`+i} index={i} duration={t.duration} rounds={t.rounds} type={t.type} desc={t.desc} isHome={isHome} seconds={t.seconds} secondsRest={t.secondsRest}/>
           ))}
         </div>  
 
