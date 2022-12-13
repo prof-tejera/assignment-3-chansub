@@ -62,14 +62,14 @@ const Nav = () => {
         <li className={(splitLocation[1] === 'add' ? 'active':'')}>
           <Link to="/add">Add</Link>
         </li>
-        <li className={(splitLocation[1] === 'timers' ? 'active':'')}>
-          <Link to="/timers">Timers</Link>
+        <li className={(splitLocation[1] === 'history' ? 'active':'')}>
+          <Link to="/history">History</Link>
         </li>
         <li className={(splitLocation[1] === 'docs' ? 'active':'')}>
           <Link to="/docs">Documentation</Link>
         </li>
-        <li className={(splitLocation[1] === 'history' ? 'active':'')}>
-          <Link to="/history">History</Link>
+        <li className={(splitLocation[1] === 'timers' ? 'active':'')}>
+          <Link to="/timers">Timers (from A1)</Link>
         </li>
 
       </ul>

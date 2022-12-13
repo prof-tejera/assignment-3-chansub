@@ -4,6 +4,8 @@ import pauseIcon from '../../images/icons8-pause-96.png';
 import resetIcon from '../../images/icons8-replay-96.png';
 import stopIcon from '../../images/icons8-stop-96.png';
 import removeIcon from '../../images/icons8-remove-96.png';
+import editIcon from '../../images/icons8-edit-24.png';
+import closeIcon from '../../images/icons8-close-window-50.png';
 
 //Note: icons downloaded from https://icons8.com
 const imgSources = [  
@@ -11,7 +13,9 @@ const imgSources = [
   {type: 'pause', src: pauseIcon},
   {type: 'reset', src: resetIcon},
   {type: 'stop', src: stopIcon},
-  {type: 'remove', src: removeIcon, width: '20px'}
+  {type: 'remove', src: removeIcon, width: '20px'},
+  {type: 'edit', src: editIcon, width: '20px'},
+  {type: 'close', src: closeIcon, width: '20px'}
 ]
 
 const Button = ({ type, text, ...btnProps }) => {

@@ -3,7 +3,7 @@ import { usePersistedState } from "../hooks";
 
 const HistoryView = () => {
     
-    const [existingEntries] = usePersistedState('myHistoryQueue',[]);
+    const [existingEntries, setExistingEntries] = usePersistedState('myHistoryQueue',[]);
 
     const ShowHistory = () =>{
 
@@ -33,8 +33,15 @@ const HistoryView = () => {
 
         <>
         <div className="historyView" >
-            <h1 className="heading">History View</h1>
+            <h1 className="heading">Workout History</h1>
+
+            {(existingEntries.length > 0) &&
+                <center><span className="clearHistory"><a href="#" onClick={() => setExistingEntries([])}>Clear History</a></span></center>
+            }
             <ul>
+                { (existingEntries.length === 0) && 
+                    <p>No history available.</p>
+                }
                 <ShowHistory/>
             </ul>
         </div>

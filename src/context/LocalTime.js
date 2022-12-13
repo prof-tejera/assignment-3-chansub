@@ -11,7 +11,7 @@ import DisplayRounds from "../components/generic/DisplayRounds";
 import TimerEditable from "../components/timers/TimerEditable";
 
 const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secondsRest }) => {
-  const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime} = useContext(AppContext);
+  const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, progressTime, setProgressTime} = useContext(AppContext);
   // eslint-disable-next-line 
   const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
 
@@ -102,16 +102,20 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
   }
  
   return (<>
-      <Panel className={active ? "yellowBG" : "whiteBG"}>
+      <Panel className={(active) ? "yellowBG" : "whiteBG"}>
         
         { (isHome === 'no') && <>
-          <Button onClick={() => setEditVisible(!editVisible)} text={editVisible ? 'Hide Edit':'Show Edit'}/>
-
-          <Button onClick={() => removeItem(index)} style={{display: (isHome === 'no') ? 'inline-block' : 'none'}} type="remove" text="Remove"/>
+          { (paused) && <>
+              <Button onClick={() => setEditVisible(!editVisible)} type={editVisible ? 'close':'edit'} text={editVisible ? 'Hide Edit':'Show Edit'}/>
+              <Button onClick={() => removeItem(index)} style={{display: (isHome === 'no') ? 'inline-block' : 'none'}} type="remove" text="Remove"/>
+            </>
+          }
         </>
         }
         
-        <b>{type}:</b> <DisplayRoundsTime/> 
+        <b>{type}:</b> 
+        
+        <DisplayRoundsTime/> 
         
         {(desc) &&
           <div>Description: {desc}</div>
