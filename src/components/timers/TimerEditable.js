@@ -1,6 +1,6 @@
 import {useState, useContext} from "react";
-import Panel from "../generic/Panel.js";
-import Button from "../generic/Button.js";
+import Panel from "../generic/Panel";
+import Button from "../generic/Button";
 import {DropdownTime, DropdownRounds} from "../generic/Dropdown";
 import Textbox  from "../generic/Textbox";
 import { AppContext } from "../../context/ContextProvider";
@@ -16,16 +16,22 @@ const TimerEditable = ({data}) => {
     return (
         <>
             <Panel className='editItem'> 
-            [Edit {data.type}]&nbsp;
+            [<em>Edit {data.type}]&nbsp;</em>
 
-            {(data.type === 'Tabata') || (data.type === 'XY') && 
-                <DropdownRounds id="selectRounds" value={rounds} onChange={(e) => {setRounds(e.target.value);} } />
+            {((data.type === 'Tabata') || (data.type === 'XY')) && 
+                <>
+                    <DropdownRounds id="selectRounds" value={rounds} onChange={(e) => {setRounds(e.target.value);} } />&nbsp;
+                </>
             }
             
-            <DropdownTime id="selectItem" value={seconds} onChange={(e) => {setSeconds(e.target.value);} } />
+            <DropdownTime id="selectItem" value={seconds} onChange={(e) => {setSeconds(e.target.value);} } />  
+
+            {(data.type === 'Tabata')? ' (work) ' : ' '}
 
             {(data.type === 'Tabata') && 
-                <DropdownTime id="selectSecondsRest" value={secondsRest} onChange={(e) => {setSecondsRest(e.target.value);} } />
+                <>
+                <DropdownTime id="selectSecondsRest" value={secondsRest} onChange={(e) => {setSecondsRest(e.target.value);} } /> (rest)
+                </>
             }
             
             <div>

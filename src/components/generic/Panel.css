@@ -11,3 +11,7 @@
 .timer-selection-container.hidden{
     display:none;
 }
+
+panel.editItem{
+    padding-top:20px;
+}

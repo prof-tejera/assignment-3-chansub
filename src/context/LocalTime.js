@@ -51,11 +51,17 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
   }, 1000);
 
   function DisplayRoundsTime(){
-    if(type === 'XY'||(type === 'Tabata')){
-      return <><DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration/rounds)} /> {(desc) ? `Description: ${desc}` : ''}</>
+    if(type === 'XY'){
+      return <><DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(seconds)} /></>
+    }
+    else if(type === 'Tabata'){
+      return <>
+        <DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} x <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(seconds)} /> work,&nbsp; 
+        <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(secondsRest)} /> rest
+      </>
     }
     else{
-      return <><DisplayTime time={convertToMinSec(duration)}/> {(desc) ? `Description: ${desc}` : ''}</>
+      return <><DisplayTime time={convertToMinSec(duration)}/></>
     }
   }
 
@@ -88,8 +94,16 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
         <Button onClick={() => setEditVisible(!editVisible)} text={editVisible ? 'Hide Edit':'Show Edit'}/>
 
         <Button onClick={() => removeItem(index)} style={{display: (isHome === 'no') ? 'inline-block' : 'none'}} type="remove" text="Remove"/>
-        {type} - <DisplayRoundsTime/> <DisplayProgress/>
-      
+        {type} - <DisplayRoundsTime/> 
+        
+        {(desc) &&
+          <div>Description: {desc}</div>
+         }
+
+        <div>
+          <DisplayProgress/>
+        </div>
+        
         {editVisible && 
            <TimerEditable data={timerObj}>susana</TimerEditable>
         }
