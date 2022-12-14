@@ -12,6 +12,10 @@
     display:none;
 }
 
-panel.editItem{
+.panel.editItem{
     padding-top:20px;
+}
+
+.queue {
+    text-align:left;
 }

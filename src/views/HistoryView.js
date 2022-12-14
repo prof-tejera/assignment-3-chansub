@@ -36,7 +36,7 @@ const HistoryView = () => {
             <h1 className="heading">Workout History</h1>
 
             {(existingEntries.length > 0) &&
-                <center><span className="clearHistory"><a href="#" onClick={() => setExistingEntries([])}>Clear History</a></span></center>
+                <center><button onClick={() => setExistingEntries([])}>Clear History</button></center>
             }
             <ul>
                 { (existingEntries.length === 0) && 

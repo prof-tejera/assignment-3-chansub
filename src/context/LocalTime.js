@@ -118,7 +118,7 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
         <DisplayRoundsTime/> 
         
         {(desc) &&
-          <div>Description: {desc}</div>
+          <div><span><b>Description:</b> {desc}</span></div>
          }
 
         <div>
