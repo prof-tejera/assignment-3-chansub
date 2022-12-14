@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePersistedState } from "../hooks";
+import { arrMove } from "../utils/helpers";
 
 export const AppContext = React.createContext({});
 
@@ -9,18 +10,9 @@ const AppProvider = ({ children }) => {
   const [paused, setPaused] = usePersistedState('myPause',true);
   const [progressTime, setProgressTime] = usePersistedState('myProgressTime',0);
   const [activeIndex, setActiveIndex] = usePersistedState('myActiveIndex',0);
+  
+  const [editVisible, setEditVisible] = useState(false);
 
-   //from https://www.w3docs.com/snippets/javascript/how-to-move-an-array-element-from-one-array-position-to-another.html
-  function arrMove(arr, oldIndex, newIndex) {
-    if (newIndex >= arr.length) {
-      let i = newIndex - arr.length + 1;
-      while (i--) {
-        arr.push(undefined);
-      }
-    }
-    arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
-    return arr;
-  }
 
   return (
     <AppContext.Provider
@@ -55,7 +47,9 @@ const AppProvider = ({ children }) => {
         queue,
         setQueue,
         progressTime,
-        setProgressTime
+        setProgressTime,
+        editVisible,
+        setEditVisible
       }}
     >
       {children}

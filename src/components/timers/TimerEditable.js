@@ -11,9 +11,7 @@ const TimerEditable = ({data}) => {
     const [secondsRest, setSecondsRest] = useState(data.secondsRest);
     const [rounds, setRounds] = useState(data.rounds);
     const [desc, setDesc] = useState(data.desc);
-    const [index, setIndex] = useState(data.index);
-    
-    const {editItem, editPosition, queue} = useContext(AppContext);
+    const {editItem, editVisible, setEditVisible} = useContext(AppContext);
 
     return (
         <>
@@ -36,7 +34,6 @@ const TimerEditable = ({data}) => {
                 </>
             }
             
-            
                 <Textbox placeholder="Optional description " className="itemTextbox" id="itemTextbox" maxLength="100" value={desc} onChange={e => setDesc(e.target.value)}/>
             
                 <Button text="Update Timer"
@@ -49,17 +46,12 @@ const TimerEditable = ({data}) => {
                          rounds: rounds,
                          seconds: seconds,
                          secondsRest: secondsRest
-                    }, data.index)
+                    }, data.index);
+                    setEditVisible(false);
                 } }
                 >
                 </Button>
-
-                Change to position: 
-                <select value={index} onChange={(e)=>editPosition(data.index, e.target.value)}>
-                    {queue.map((queue,index) => <option key={index} value={index}>{index}</option>)}
-                </select>
             </Panel>
-
         </>        
     );
 };

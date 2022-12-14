@@ -49,3 +49,7 @@ nav ul a{
 nav li.active{
    background-color: #d9760b;
 }
+
+table.noBorder tr td{
+  border: none;
+}

@@ -12,3 +12,14 @@ export const convertToMinSec = (s) => {
 //sample
 //export const add = (a, b) => a + b;
 
+//from https://www.w3docs.com/snippets/javascript/how-to-move-an-array-element-from-one-array-position-to-another.html
+export const  arrMove = (arr, oldIndex, newIndex) => {
+if (newIndex >= arr.length) {
+    let i = newIndex - arr.length + 1;
+    while (i--) {
+    arr.push(undefined);
+    }
+}
+arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
+return arr;
+}

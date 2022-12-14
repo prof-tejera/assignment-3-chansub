@@ -11,12 +11,12 @@ import DisplayRounds from "../components/generic/DisplayRounds";
 import TimerEditable from "../components/timers/TimerEditable";
 
 const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secondsRest }) => {
-  const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, progressTime, setProgressTime} = useContext(AppContext);
+  const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime, editPosition, editVisible, setEditVisible} = useContext(AppContext);
   // eslint-disable-next-line 
   const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
 
   const [time, setTime] = useState(0);
-  const [editVisible, setEditVisible] = useState(false);
+  // const [editVisible, setEditVisible] = useState(false); //moved to ContextProvider
   
   const active = activeIndex === index; 
 
@@ -84,7 +84,7 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
     if(!active) return;
 
     if(active && type === 'Countdown'){
-      return (<span> (Progress: {convertToMinSec(duration-time)})</span>)
+      return (<span> Progress: {convertToMinSec(duration-time)}</span>)
     }
     else if(active && (type==='XY' || type==='Tabata')){
  
@@ -94,37 +94,55 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
       if((timePerRound*myActiveRound < time) && (timeSoFar < duration)){
          setMyActiveRound(myActiveRound+1);
       }
-      return (<span> ({myActiveRound} of {rounds} Progress: {convertToMinSec(time)})</span>)
+      return (<span> {myActiveRound} of {rounds} Progress: {convertToMinSec(time)}</span>)
     }
     else{
-      return (<span> (Progress: {convertToMinSec(time)})</span>)
+      return (<span> Progress: {convertToMinSec(time)}</span>)
     }
   }
  
   return (<>
       <Panel className={(active) ? "yellowBG" : "whiteBG"}>
-        
-        { (isHome === 'no') && <>
-          { (paused) && <>
-              <Button onClick={() => setEditVisible(!editVisible)} type={editVisible ? 'close':'edit'} text={editVisible ? 'Hide Edit':'Show Edit'}/>
-              <Button onClick={() => removeItem(index)} style={{display: (isHome === 'no') ? 'inline-block' : 'none'}} type="remove" text="Remove"/>
-            </>
-          }
-        </>
-        }
-        
-        <b>{type}:</b> 
-        
-        <DisplayRoundsTime/> 
-        
-        {(desc) &&
-          <div><span><b>Description:</b> {desc}</span></div>
-         }
 
-        <div>
-          <DisplayProgress/>
-        </div>
-        
+        <table width="100%" className="noBorder">
+          <tbody>
+          <tr>
+            <td width="25%">
+              { (isHome === 'no') && <>
+                { (paused) && <>
+                  <div className="editButtons">
+                    <select value={index} onChange={(e)=>editPosition(index, e.target.value)}>
+                        {queue.map((queue,i) => <option key={i} value={i}>{i}</option>)}
+                    </select>
+
+                    <Button onClick={() => setEditVisible(!editVisible)} type={editVisible ? 'close':'edit'} text={editVisible ? 'Hide Edit':'Show Edit'}/>
+                    <Button onClick={() => removeItem(index)} style={{display: (isHome === 'no') ? 'inline-block' : 'none'}} type="remove" text="Remove"/>
+                  </div>
+                  </>
+                }
+              </>
+              }
+            </td>
+            <td width="50%">
+              <div className="queueDetails">
+
+                <b>{type}:</b> 
+
+                <DisplayRoundsTime/> 
+
+                {(desc) &&
+                  <div><span><b>Description:</b> {desc}</span></div>
+                }
+              </div>
+            </td>
+            <td width="25%">
+                <DisplayProgress/>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+       
         {editVisible && 
            <TimerEditable data={timerObj}/>
         }
