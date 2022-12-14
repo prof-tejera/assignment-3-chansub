@@ -11,9 +11,6 @@ const AppProvider = ({ children }) => {
   const [progressTime, setProgressTime] = usePersistedState('myProgressTime',0);
   const [activeIndex, setActiveIndex] = usePersistedState('myActiveIndex',0);
   
-  const [editVisible, setEditVisible] = useState(false);
-
-
   return (
     <AppContext.Provider
       value={{
@@ -47,9 +44,7 @@ const AppProvider = ({ children }) => {
         queue,
         setQueue,
         progressTime,
-        setProgressTime,
-        editVisible,
-        setEditVisible
+        setProgressTime
       }}
     >
       {children}

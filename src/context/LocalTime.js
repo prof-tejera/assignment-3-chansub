@@ -11,12 +11,12 @@ import DisplayRounds from "../components/generic/DisplayRounds";
 import TimerEditable from "../components/timers/TimerEditable";
 
 const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secondsRest }) => {
-  const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime, editPosition, editVisible, setEditVisible} = useContext(AppContext);
+  const { activeIndex, paused, setPaused, setActiveIndex, removeItem, queue, setProgressTime, editPosition} = useContext(AppContext);
   // eslint-disable-next-line 
   const [historyQueue, setHistoryQueue] = usePersistedState('myHistoryQueue',[]);
 
   const [time, setTime] = useState(0);
-  // const [editVisible, setEditVisible] = useState(false); //moved to ContextProvider
+  const [editVisible, setEditVisible] = useState(false); 
   
   const active = activeIndex === index; 
 

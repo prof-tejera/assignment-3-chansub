@@ -11,7 +11,7 @@ const TimerEditable = ({data}) => {
     const [secondsRest, setSecondsRest] = useState(data.secondsRest);
     const [rounds, setRounds] = useState(data.rounds);
     const [desc, setDesc] = useState(data.desc);
-    const {editItem, editVisible, setEditVisible} = useContext(AppContext);
+    const {editItem} = useContext(AppContext);
 
     return (
         <>
@@ -47,7 +47,6 @@ const TimerEditable = ({data}) => {
                          seconds: seconds,
                          secondsRest: secondsRest
                     }, data.index);
-                    setEditVisible(false);
                 } }
                 >
                 </Button>
