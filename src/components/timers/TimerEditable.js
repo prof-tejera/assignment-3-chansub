@@ -20,7 +20,7 @@ const TimerEditable = ({data}) => {
 
             {((data.type === 'Tabata') || (data.type === 'XY')) && 
                 <>
-                    <DropdownRounds id="selectRounds" value={rounds} onChange={(e) => {setRounds(e.target.value);} } />&nbsp;
+                    <DropdownRounds id="selectRounds" value={rounds} onChange={(e) => {setRounds(e.target.value);} } />&nbsp;@&nbsp;
                 </>
             }
             

@@ -64,12 +64,12 @@ const Timer = ({ id, duration, rounds, index, type, isHome, desc, seconds, secon
   function DisplayRoundsTime(){
     if(type === 'XY'){
       return <>
-        <DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} * <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(seconds)} /> = <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration)} />
+        <DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} @ <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(seconds)} /> = <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration)} />
         </>
     }
     else if(type === 'Tabata'){
       return <>
-        <DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} * (<DisplayTime label='' myClassName='noPadding' time={convertToMinSec(seconds)} /> work +&nbsp; 
+        <DisplayRounds rounds={rounds} /> {(rounds>1)?'rounds':'round'} @ (<DisplayTime label='' myClassName='noPadding' time={convertToMinSec(seconds)} /> work +&nbsp; 
         <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(secondsRest)} /> rest) = <DisplayTime label='' myClassName='noPadding' time={convertToMinSec(duration)} />
       </>
     }
