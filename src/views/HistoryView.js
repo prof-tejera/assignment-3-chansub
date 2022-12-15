@@ -15,10 +15,10 @@ const HistoryView = () => {
                             <li key={index2} className="details">
                                 <span className="workoutType">{item2.type}:</span> 
                                 Total Duration: {item2.duration};  
+                                {(item2.rounds) ? ` Rounds: ${item2.rounds}; ` : ' '}
                                 &nbsp;Seconds: {item2.seconds}; 
                                 {(item2.secondsRest) ? ` Seconds of Rest: ${item2.secondsRest}; ` : ''}
-                                {(item2.rounds) ? ` Rounds: ${item2.rounds}; ` : ' '}
-                                {(item2.desc) ? ` Desc: ${item2.desc}; ` : ''}
+                                {(item2.desc) ? ` Description: ${item2.desc}; ` : ''}
 
                             </li>
                         ))}
