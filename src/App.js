@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from "react";
-import { useLocation, BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useLocation, BrowserRouter as Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import styled from "styled-components";
 import DocumentationView from "./views/DocumentationView";
 import HistoryView from "./views/HistoryView";
@@ -346,7 +346,7 @@ const App = () => {
     <LoadOnceFromQueryString/>
 
     <Container>
-      <Router>
+      <BrowserRouter basename="/assignment-3-chansub">
         <Nav />
 
         <Routes>
@@ -356,7 +356,7 @@ const App = () => {
           <Route path="/add" element={<BodyContainer><Body><Inner isHome='no'/></Body></BodyContainer>} />
           <Route path="/history" element={<BodyContainer><Body><HistoryView/></Body></BodyContainer>} />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </Container>
     </AppProvider>
   );
