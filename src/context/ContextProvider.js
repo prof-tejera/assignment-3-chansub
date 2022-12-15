@@ -33,13 +33,13 @@ const AppProvider = ({ children }) => {
           setQueue((q) => [...q, item]);
         },
         editItem: (item, index) => {
-          const updatedQ = queue.map((q,i) => (i === index ? item : q));  //update that contents of that queue index item
+          const updatedQ = queue.map((q,i) => (i === index ? item : q));  
           setQueue(updatedQ);
         },
-        removeItem: (index) => setQueue(queue.filter((q, i) => i !== index)),  //get me everything except for that index
+        removeItem: (index) => setQueue(queue.filter((q, i) => i !== index)),  
         editPosition: (fromIndex, toIndex) => {
           console.log("move from ",fromIndex, " to ", toIndex);
-          setQueue(arrMove(queue,fromIndex,toIndex));
+          setQueue([...arrMove(queue,fromIndex,toIndex)]); //arrMove() modifies the original array, but does not change the reference (for rerender). Need to do spread notation to clone into a new array to work.
         },
         queue,
         setQueue,
