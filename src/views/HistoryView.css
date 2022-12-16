@@ -1,0 +1,24 @@
+.historyView{
+    text-align: left;
+}
+.historyView h1.heading{
+    text-align:center
+}
+
+.historyView .workout{
+    margin-bottom: 20px;
+}
+.historyView .workoutType{
+    font-style: italic;
+    background-color: rgb(238, 238, 166);
+    margin-right: 5px;
+}
+
+.historyView ul li.details{
+    font-size: 14px;
+    line-height: 2em;
+   
+}
+.historyView .clearHistory{
+    font-size: 12px;
+}
