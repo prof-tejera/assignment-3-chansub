@@ -346,9 +346,8 @@ const App = () => {
     <LoadOnceFromQueryString/>
 
     <Container>
-      <Router>
+      <Router basename="/assignment-3-chansub">
         <Nav />
-
         <Routes>
           <Route path="/" element={<BodyContainer><Body><Inner isHome='yes'/></Body></BodyContainer>} />
           <Route path="/docs" element={<DocumentationView />} />
